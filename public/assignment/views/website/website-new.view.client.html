@@ -1,0 +1,61 @@
+<form ng-model="websiteForm" name="websiteForm" ng-submit="model.createWebsite(websiteForm.$valid)" novalidate>
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <a href="#/user/{{model.userId}}/website"
+           class="navbar-text navbar-link pull-left">
+                  <span class="glyphicon glyphicon-chevron-left">
+                  </span>
+        </a>
+        <a class="navbar-brand pull-left" href="#">
+            New Website
+        </a>
+        <a  ng-click="model.createWebsite(websiteForm.$valid)"
+           class="navbar-text navbar-link pull-right hand">
+            <span class="glyphicon glyphicon-ok"></span>
+        </a>
+    </div>
+</nav>
+<div class="container">
+    <div class="alert  alert-danger alert-dismissible"
+         ng-if="model.error"
+         role="alert">
+        <button ng-click="model.close()"
+                type="button"
+                class="close"
+                data-dismiss="alert"
+                aria-label="Close">
+            <span aria-hidden="true">&times;</span></button>
+        {{model.error}}
+    </div>
+        <div class="form-group">
+            <label for="websitename">Name</label>
+            <input ng-model="model.website.name"
+                   type="text"
+                   class="form-control"
+                   id="websitename"
+                   name="websitename"
+                   placeholder="Name" required>
+            <div ng-messages="websiteForm.websitename.$error"
+                 style="color:maroon" role="alert"
+                 ng-show="websiteForm.$submitted && websiteForm.websitename.$error.required">
+                <div ng-message="required">You did not enter a field</div></div>
+        </div>
+        <div class="form-group">
+            <label for="website-description">Website Description</label>
+                <textarea ng-model="model.website.description"
+                          rows="4"
+                          id="website-description"
+                          class="form-control"
+                          placeholder="Description"></textarea>
+        </div>
+    </form>
+</div>
+
+<nav class="navbar navbar-default navbar-fixed-bottom">
+    <div class="container-fluid">
+        <a href="#/profile/{{model.userId}}" class="navbar-center pull-right">
+            <span class="glyphicon glyphicon-user"></span>
+        </a>
+    </div>
+</nav>
+</form>

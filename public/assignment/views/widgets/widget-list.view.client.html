@@ -1,0 +1,70 @@
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <a href="#/user/{{model.uid}}/website/{{model.wid}}/page" class="navbar-text navbar-link pull-left">
+            <span class="glyphicon glyphicon-chevron-left">
+            </span>
+        </a>
+        <a href="#" class="pull-left navbar-brand">
+            Widgets
+        </a>
+        <a href="#/user/{{model.uid}}/website/{{model.wid}}/page/{{model.pid}}/widget/new"
+           class="navbar-link navbar-text pull-right">
+                  <span class="glyphicon glyphicon-plus">
+                  </span>
+        </a>
+    </div>
+</nav>
+<div id="container" class="container" wam-Directives callback-fn="ctrlFn(start,end)">
+    <div class="jga-widget"
+         ng-repeat="widget in model.widgets"
+         ng-switch on="widget.type">
+
+        <div id="tool" name="tool" class="jga-widget-tool up-vid">
+            <a href="#/user/{{model.uid}}/website/{{model.wid}}/page/{{model.pid}}/widget/{{widget._id}}"><span
+                    class="glyphicon glyphicon-cog"></span></a>
+            <span class="glyphicon glyphicon-align-justify"></span>
+        </div>
+
+        <!-- Bind each widget type to its own html here and view it on widgetType switch-->
+
+        <div ng-switch-when="HEADING">
+            <div ng-include src="'views/widgets/header.view.client.html'"></div>
+        </div>
+
+        <div ng-switch-when="IMAGE">
+            <div ng-include src="'views/widgets/image.view.client.html'"></div>
+        </div>
+
+        <!-- Use the responsive div iframe tags-->
+        <div ng-switch-when="YOUTUBE">
+            <div ng-include src="'views/widgets/youtube.view.client.html'"></div>
+        </div>
+
+        <!-- Bind to the HTML to the div tag-->
+        <div ng-switch-when="HTML">
+            <div ng-include src="'views/widgets/html.view.client.html'"></div>
+        </div>
+
+        <!-- Bind to the HTML to the div tag-->
+        <div ng-switch-when="TEXT">
+            <div ng-include src="'views/widgets/text.view.client.html'"></div>
+        </div>
+    </div>
+</div>
+
+<nav class="navbar navbar-default navbar-fixed-bottom">
+    <div class="container-fluid">
+        <a class="navbar-text navbar-link pull-left">
+            <span class="glyphicon glyphicon-play">
+            </span>
+        </a>
+        <!-- Editing is disabled by default --- click eye to edit --->
+        <a ng-click="model.toggableEdit()" class="navbar-brand navbar-link pull-left hand">
+            <span id="eye" class="glyphicon glyphicon-eye-close">
+            </span>
+        </a>
+        <a href="#/profile/{{model.uid}}" class="navbar-center pull-right">
+            <span class="glyphicon glyphicon-user"></span>
+        </a>
+    </div>
+</nav>

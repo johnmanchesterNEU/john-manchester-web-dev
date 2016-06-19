@@ -1,0 +1,35 @@
+<form>
+    <div class="form-group">
+        <label for="widgetname">Text</label>
+        <input ng-model="model.widget.text"
+               type="text"
+               class="form-control"
+               id="widgetname"
+               name="widgetname"
+               value="Name"
+               placeholder="Heading Name">
+    </div>
+    <div class="form-group">
+        <label for="widget-text">Title</label>
+        <input ng-model="model.widget.description"
+               type="text"
+               class="form-control"
+               id="widget-text"
+               placeholder="Heading Text">
+    </div>
+
+    <div class="form-group">
+        <label for="widget-size">Size</label>
+        <select ng-model="model.widget.size"
+                class="form-control"
+                id="widget-size" ng-switch-on="widget.size">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="3">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+        </select>
+    </div>
+</form>

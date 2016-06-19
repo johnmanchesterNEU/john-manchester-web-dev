@@ -3,5 +3,131 @@ input.form-control {
 }
 
 body {
-    padding-top: 36px;
+    padding-top: 60px;
+    padding-bottom: 60px;
+}
+
+p.navbar-text.pull-right {
+    margin-right: 15px;
+}
+
+p.navbar-text.pull-left {
+    margin-left: 15px;
+}
+
+.jga-widget-tool {
+    position: absolute;
+    right: 15px;
+    background-color: white;
+    padding-left: 5px;
+    padding-bottom: 5px;
+    border-bottom-left-radius: 8px;
+    opacity: 0.7;
+}
+
+.vid {
+    z-index: inherit;
+}
+
+.up-vid {
+    z-index: 999;
+}
+
+
+.navbar-center{
+    padding-bottom: 15px;
+    padding-top: 15px
+}
+
+ul.borderless li{
+    border: none;
+}
+
+.link:hover {
+    text-decoration: none;
+}
+
+.underline{
+    text-decoration: underline;
+}
+
+.strike{
+    text-decoration: line-through
+}
+.bold {
+    font-weight: normal;
+}
+
+.hand{
+    cursor: pointer;
+}
+
+.ng-invalid {
+    border-color: red;
+    outline-color: red;
+}
+
+.ng-valid {
+    border-color: green;
+    outline-color: green;
+}
+
+.messages {
+    font-size: smaller;
+    padding-top: 5px;
+    padding-bottom: 10px;
+    color: red;
+}
+
+.no-indent{
+    padding-left: 0;
+    margin-left: 0;
+}
+
+.buffer10{
+    margin-top:10px;
+}
+
+.top-buffer { margin-top:20px; }
+.wrap{
+    padding-bottom: 0.25em;
+}
+.inputfile {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}
+
+.inputfile + label {
+    font-size: 1.25em;
+    font-weight: 700;
+    color: white;
+    background-color: black;
+    display: inline-block;
+    cursor: pointer; /* "hand" cursor */
+
+}
+
+.inputfile:focus + label,
+.inputfile + label:hover {
+    background-color: red;
+}
+
+.ghost{
+    display: none;
+    visibility: collapse;
+}
+.iframefix {
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    opacity:0.0;
+    z-index: 0;
+    display: none;
+    /*background:rgba(255,255,255,0.8); or just this*/
 }

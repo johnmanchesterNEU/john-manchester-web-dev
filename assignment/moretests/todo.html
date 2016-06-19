@@ -1,0 +1,16 @@
+<table>
+    <thead>
+    <tr>
+        <th class="first" ng-repeat="(key, value) in data[0]">
+            {{key}}
+        </th>
+    </tr>
+    </thead>
+    <tbody >
+    <tr ng-repeat="row in data | orderBy : 'priorty' ">
+        <td ng-repeat="(key,value) in row">
+            {{value}}
+        </td>
+    </tr>
+    </tbody>
+</table>

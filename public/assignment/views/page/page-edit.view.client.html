@@ -1,0 +1,69 @@
+<form ng-model="pageForm" name="pageForm" ng-submit="model.updatePage(pageForm.$valid)" novalidate>
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+        <a href="#/user/{{model.uid}}/website/{{model.wid}}/page"
+           class="navbar-text navbar-link pull-left">
+                  <span class="glyphicon glyphicon-chevron-left">
+                  </span>
+        </a>
+        <a class="navbar-brand pull-left" href="#">
+            Edit Page
+        </a>
+        <a ng-click="model.updatePage(pageForm.$valid)"
+           class="navbar-text navbar-link pull-right hand">
+                  <span class="glyphicon glyphicon-ok">
+                  </span>
+        </a>
+    </div>
+</nav>
+<div class="container">
+    <div class="alert  alert-danger alert-dismissible"
+         ng-if="model.success"
+         role="alert">
+        <button ng-click="model.close()"
+                type="button"
+                class="close"
+                data-dismiss="alert"
+                aria-label="Close">
+            <span aria-hidden="true">&times;</span></button>
+        {{model.error}}
+    </div>
+        <div class="form-group">
+            <label for="pagename">Name</label>
+            <input ng-model="model.page.name"
+                   type="text"
+                   class="form-control"
+                   id="pagename"
+                   name="pagename"
+                   placeholder="Page Name" required>
+            <div ng-messages="pageForm.pagename.$error"
+                 style="color:maroon"
+                 role="alert"
+                 ng-show="model.submitted && pageForm.pagename.$error.required">
+                <div ng-message="required">You did not enter a field</div></div>
+        </div>
+        <div class="form-group">
+            <label for="page-title">Title</label>
+            <input ng-model="model.page.title"
+                   type="text"
+                   class="form-control"
+                   id="page-title"
+                   placeholder="Page Title">
+        </div>
+    </form>
+
+    <a class="btn btn-danger  btn-block"
+       ng-click="model.deletePage(model.pid)">Delete</a>
+</div>
+
+<nav class="navbar navbar-default navbar-fixed-bottom">
+    <div class="container">
+        <a href="#" class="navbar-text navbar-link pull-left">
+            <span class="glyphicon glyphicon-share-alt"></span>
+        </a>
+        <a href="#/profile/{{model.userId}}"
+           class="navbar-center pull-right">
+            <span class="glyphicon glyphicon-user"></span>
+        </a>
+    </div>
+</nav>

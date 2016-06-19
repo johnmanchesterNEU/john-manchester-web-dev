@@ -1,0 +1,35 @@
+<div id="bg" class="background2">
+    <section id="main">
+        <article id="myname" class="panel slidedown" ng-animate="'animate'">
+            <span class="all2">
+<div layout="column" ng-cloak="" class="autocompletedemoFloatingLabel">
+    <md-content class="md-padding" style="background: transparent">
+        <form ng-submit="$event.preventDefault()" name="searchForm">
+                <md-input-container flex >
+                </md-input-container>
+                <md-autocomplete flex
+                                 required
+                                 md-input-name="autocompleteField"
+                                 md-input-minlength="2"
+                                 md-input-maxlength="30"
+                                 md-no-cache="ctrl.noCache"
+                                 md-selected-item="model.selectedItem"
+                                 md-search-text="model.searchText"
+                                 md-items="item in model.querySearch(model.searchText)"
+                                 md-item-text="item.display" md-floating-label="Your Country">
+                    <md-item-template>
+                        <span md-highlight-text="model.searchText"> {{item.display}}</span>
+                    </md-item-template>
+                    <div ng-messages="searchForm.autocompleteField.$error" ng-if="searchForm.autocompleteField.$touched">
+                        <div ng-message="required">You <b>must</b> have a favorite state.</div>
+                        <div ng-message="minlength">Your entry is not long enough.</div>
+                        <div ng-message="maxlength">Your entry is too long.</div>
+                    </div>
+                </md-autocomplete>
+        </form>
+    </md-content>
+</div>
+</span>
+            </article>
+        </section>
+</div>

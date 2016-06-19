@@ -1,0 +1,82 @@
+<form ng-model="widgetForm" name="widgetForm" ng-submit="model.updateWidget(widgetForm.$valid)" novalidate>
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid">
+            <a href="#/user/{{model.uid}}/website/{{model.wid}}/page/{{model.pid}}/widget"
+               class="navbar-text navbar-link pull-left">
+                  <span class="glyphicon glyphicon-chevron-left">
+                  </span>
+            </a>
+            <a class="navbar-brand pull-left">
+                Edit Widget
+            </a>
+            <a ng-click="model.updateWidget(widgetForm.$valid)"
+               class="navbar-text navbar-link pull-right hand">
+                <span class="glyphicon glyphicon-ok"></span>
+            </a>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="alert  alert-danger alert-dismissible"
+             ng-if="model.success"
+             role="alert">
+            <button ng-click="model.close()"
+                    type="button"
+                    class="close"
+                    data-dismiss="alert"
+                    aria-label="Close">
+                <span aria-hidden="true">&times;</span></button>
+            {{model.error}}
+        </div>
+        <div class="form-group">
+            <label for="widgetname">Name</label>
+            <input ng-model="model.widget.name"
+                   type="text"
+                   class="form-control"
+                   id="widgetname"
+                   name="widgetname"
+                   placeholder="Name" required/>
+            <div ng-messages="widgetForm.widgetname.$error"
+                 style="color:maroon"
+                 role="alert"
+                 ng-show="widgetForm.$submitted && widgetForm.widgetname.$error.required">
+                <div ng-message="required">You did not enter a field</div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div ng-switch="model.widget.type">
+            <div ng-switch-when="HEADING">
+                <div ng-include src="'views/widgets/widget-heading.view.client.html'"></div>
+            </div>
+
+            <div ng-switch-when="HTML">
+                <div ng-include src="'views/widgets/widget-html.view.client.html'"></div>
+            </div>
+            <div ng-switch-when="IMAGE">
+                <div ng-include src="'views/widgets/widget-image.view.client.html'"></div>
+            </div>
+            <div ng-switch-when="YOUTUBE">
+                <div ng-include="" src="'views/widgets/widget-youtube.view.client.html'"></div>
+            </div>
+            <div ng-switch-when="TEXT">
+                <div ng-include="" src="'views/widgets/widget-text.view.client.html'"></div>
+            </div>
+            <div ng-switch-when="FLICKR">
+                <div ng-include="" src="'views/widgets/widget-flickr-search.view.client.html'"></div>
+            </div>
+        </div>
+        <button class="btn btn-danger btn-block"
+                ng-click="model.deleteWidget()">Delete
+        </button>
+    </div>
+</form>
+<nav class="navbar navbar-default navbar-fixed-bottom">
+    <div class="container-fluid">
+        <a href="#" class="navbar-text navbar-link pull-left">
+            <span class="glyphicon glyphicon-share-alt"></span>
+        </a>
+        <a href="#/profile/{{model.uid}}" class="navbar-center pull-right">
+            <span class="glyphicon glyphicon-user"></span>
+        </a>
+    </div>
+</nav>

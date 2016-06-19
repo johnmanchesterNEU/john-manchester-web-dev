@@ -1,10 +1,85 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="WebAppMaker">
 <head>
     <meta charset="UTF-8">
-    <title>Assignment Home Page</title>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="viewport" content="initial-scale=1.25, user-scalable = no">
+    <title>WAM</title>
+
+    <!-- Styles-->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/textAngular/1.5.1/textAngular.css"/>
+
+
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="css/textAngular.css"/>
+    <link href="css/style.css" rel="stylesheet"/>
+
+
+    <!-- External Libraries-->
+    <script src="https://use.fontawesome.com/66f4f815f5.js"></script>
+    <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-route.min.js"></script>
+    <script src="https://code.angularjs.org/1.4.9/angular-messages.min.js"></script>
+
+
+
+
+    <!-- Internal Libraries-->
+    <script src="directives/wam-directives.js"></script>
+    <script src="directives/ng-pattern-restrict-min.js"></script>
+    <script src="directives/directive.js"></script>
+    <script src="js/touch-punch.js"></script>
+
+
+    <script src="js/textAngular-rangy.1.5.1.min.js"></script>
+    <script src="js/textAngular-sanitize.1.5.1.min.js"></script>
+    <script src="js/textAngular.1.5.1.min.js"></script>
+
+
+    <!-- Configuration-->
+    <script src="app.js"></script>
+    <script src="config.js"></script>
+
+
+    <!-- User Javascript-->
+    <script src="services/user.service.client.js"></script>
+    <script src="views/user/login.controller.client.js"></script>
+    <script src="views/user/profile.controller.client.js"></script>
+    <script src="views/user/register.controller.client.js"></script>
+    <!--<script src="../../assignment/services/user.services.server.js"></script>-->
+
+
+    <!-- Website Javascript -->
+    <script src="services/website.service.client.js"></script>
+    <script src="views/website/website-list.controller.client.js"></script>
+    <script src="views/website/website-edit.controller.client.js"></script>
+    <script src="views/website/website-new.controller.client.js"></script>
+
+    <!-- Page Javascript-->
+    <script src="services/page.service.client.js"></script>
+    <script src="views/page/page-edit.controller.client.js"></script>
+    <script src="views/page/page-list.controller.client.js"></script>
+    <script src="views/page/page-new.controller.client.js"></script>
+
+    <!-- Widget Javascript-->
+    <script src="services/widget.service.client.js"></script>
+    <script src="views/widgets/widget-list.controller.client.js"></script>
+    <script src="views/widgets/widget-chooser.controller.js"></script>
+    <script src="views/widgets/widget-edit.controller.js"></script>
+    <script src="views/widgets/widget-new.controller.js"></script>
+
+    
+    <script src="views/widgets/widget-flickr-search.controller.js"></script>
+    <script src="services/flickr.services.client.js"></script>
+
+
 </head>
 <body>
-    <h1>Assignment Home Page</h1>
+<div ng-view></div>
 </body>
 </html>

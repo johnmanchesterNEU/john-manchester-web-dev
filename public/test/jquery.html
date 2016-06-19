@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+
+    <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+</head>
+<body>
+<h1>Hello World</h1>
+<script>
+    jQuery("h1")
+            .html("Hello from jquery")
+            .css("background-color", "green");
+
+    var list = jQuery.list(".list");
+    list.append("<li>Item 123</li>");
+
+    for (var i = 0; i < 4; i++) {
+        list.append("<li>Item i</li>")
+    }
+    list.sortable({
+        axis:"y"
+    })
+//axis
+</script>
+</body>
+</html>

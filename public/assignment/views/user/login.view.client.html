@@ -1,0 +1,53 @@
+<div class="container">
+    <div class="alert  alert-danger alert-dismissible"
+         ng-if="model.error"
+         role="alert">
+        <button ng-click="model.close()"
+                type="button"
+                class="close"
+                data-dismiss="alert"
+                aria-label="Close">
+            <span aria-hidden="true">&times;</span></button>
+        {{model.error}}
+    </div>
+    <h1>Login</h1>
+    <form ng-model="userForm" name="userForm" ng-submit="model.login(userForm.$valid)" novalidate>
+    <div class="form-group">
+        <input ng-model="model.user.username"
+               type="text"
+               class="form-control"
+               id="username"
+               name="username"
+               placeholder="username"
+               autocorrect="off"
+               autocapitalize="off" spellcheck="false"
+               required/>
+        <div ng-messages="userForm.username.$error"
+             style="color:maroon"
+             role="alert"
+             ng-show="userForm.$submitted && userForm.password.$error.required">
+            <div ng-message="required">You did not enter a field</div></div>
+    </div>
+    <div class="form-group">
+        <input ng-model="model.user.password"
+               type="password"
+               class="form-control"
+               id="password"
+               name="password"
+               placeholder="password" required/>
+        <div ng-messages="userForm.password.$error"
+             style="color:maroon" role="alert"
+             ng-show="userForm.$submitted  && userForm.password.$error.required">
+            <div ng-message="required">You did not enter a field</div></div>
+    </div>
+    <button class="btn btn-primary btn-block"
+       ng-click="model.login(userForm.$valid)">Login</button>
+
+    <a class="btn btn-success btn-block" href="#/register">Register</a>
+
+        <a class="btn btn-primary btn-block"
+           href="/auth/facebook" ><span class="fa fa-facebook-official"></span> facebook</a>
+
+    </form>
+</div>
+</div>

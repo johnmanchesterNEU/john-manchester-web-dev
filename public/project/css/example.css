@@ -1,0 +1,40 @@
+html {
+    scroll-behavior: smooth;
+    white-space: nowrap;
+}
+
+#anchors a {
+    display: block;
+}
+
+a {
+    display: inline-block;
+    background: #fff;
+    padding: 4px;
+}
+
+div {
+    display: block;
+    height: 400px;
+    width: 400px;
+    padding: 4px;
+    border: 2px solid grey;
+    position: relative;
+}
+
+#red {
+    background: red;
+    left: calc(412px * 1);
+}
+#blue {
+    background: blue;
+    left: calc(412px * 2);
+}
+#green {
+    background: green;
+    left: calc(412px * 3);
+}
+#yellow {
+    background: yellow;
+    left: calc(412px * 4);
+}

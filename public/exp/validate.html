@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="ValidApp">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/textAngular/1.5.1/textAngular.css"/>
+
+
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+
+    <link href="style.css" rel="stylesheet"/>
+
+
+    <!-- External Libraries-->
+    <script src="https://use.fontawesome.com/66f4f815f5.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.js"></script>
+
+    <script src="validate.js"></script>
+</head>
+<body>
+<div class="container" ng-controller="ValidController as model">
+    <h1>Angular Validaion</h1>
+
+    <form name="myForm" novalidate>
+        <input name="email" ng-model="email"/>
+        <button type="submit" class="btn btn-success btn-block"></button>
+    </form>
+{{myForm}}
+
+</div>
+</body>
+</html>

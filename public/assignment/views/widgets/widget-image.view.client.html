@@ -1,0 +1,56 @@
+<form action="/api/upload" method="post" ng-submit="model.submitForm(userForm.$valid)" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="image-name">Name</label>
+            <input ng-model="model.widget.name"
+                   name="name"
+                   type="text"
+                   class="form-control"
+                   id="image-name"
+                   value="Name"
+                   placeholder="Name">
+        </div>
+        <div class="form-group">
+            <label for="image-text">Title</label>
+            <input ng-model="model.widget.text"
+                   name="text"
+                   type="text"
+                   class="form-control"
+                   id="image-text"
+                   value="Text"
+                   placeholder="Flavor Text">
+        </div>
+        <div class="form-group">
+            <label for="image-url">URL</label>
+            <input ng-model="model.widget.url"
+                   class="form-control"
+                   id="image-url"
+                   value="https://someranddomwebsite.some/someimage.png"
+                   placeholder="URL">
+        </div>
+        <div class="form-group">
+            <label for="image-width">Size</label>
+            <input ng-model="model.widget.width"
+                   name="width"
+                   type="text"
+                   class="form-control"
+                   id="image-width"
+                   value="{{model.widget.width}}"
+                   placeholder="100%"
+                   required>
+        </div>
+
+    <input  name="myFile" value="{{model.file}}"   type="file" class="form-control" required/>
+    <input  name="widgetId" value="{{model.widget._id}}"   style="display: none"/>
+    <input  name="uid" value="{{model.uid}}"   style="display: none"/>
+    <input  name="wid" value="{{model.wid}}"   style="display: none"/>
+    <input  name="pid" value="{{model.pid}}"   style="display: none"/>
+    <input  name="type" value="{{model.type}}"   style="display: none"/>
+    <button type="submit"   ng-disabled="userForm.$invalid" id="file-submit" class="btn btn-block btn-primary" disabled>Upload Image</button>
+</form>
+<div class="form-group">
+    <!-- /flickr/:uid/website/:wid/page/:pid/widget/:wgid-->
+    <a href="#/flickr/{{model.uid}}/website/{{model.wid}}/page/{{model.pid}}/widget/{{model.wgid}}"
+       class="bold">
+       Choose a Flickr Image
+    </a>
+</div>
