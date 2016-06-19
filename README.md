@@ -14,7 +14,7 @@ order everytime
 
 Form validation works for all required fields.
 
-FACEBOOK_CLIENT_ID = 1039694956117125
-FACEBOOK_CLIENT_SECRET = da30f2ed7596cb1e2d0e3c8eea7a9abc
-FACEBOOK_CALLBACK_URL = http://localhost:3000/auth/facebook/callback
+FACEBOOK_CLIENT_ID = '1039694956117125'
+FACEBOOK_CLIENT_SECRET = 'da30f2ed7596cb1e2d0e3c8eea7a9abc'
+FACEBOOK_CALLBACK_URL = 'http://localhost:3000/auth/facebook/callback'
 
