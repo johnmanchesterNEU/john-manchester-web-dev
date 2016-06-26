@@ -14,12 +14,93 @@ module.exports = function () {
         findUserByCredentials:findUserByCredentials,
         getUsers: getUsers,
         findUserEnc:findUserEnc,
-        findUserByFacebookId: findUserByFacebookId
+        findUserByFacebookId: findUserByFacebookId,
+        findUserByGoogleId: findUserByGoogleId,
+        updateGoogle: updateGoogle,
+        updateFacebook: updateFacebook,
+        updateFlickr:updateFlickr,
+        saveFlickr:saveFlickr,
+        findUserByFlickrId:findUserByFlickrId,
+        createFlickr: createFlickr,
+        findById: findById,
+        findFacebookUser:findFacebookUser,
+        register:register
+
     }
     return api;
 
+
+    function register(user){
+        var newUser = new User(user);
+
+        console.log(newUser);
+        return newUser.save();
+    }
+
+
+    function findFacebookUser(id) {
+        return User.findOne({"facebook.id": id});
+    }
+
+
+    function findUserById(userId) {
+        return User.findById(userId);
+    }
+
+    function findById(user){
+        return User.findOne({"user.id":user.id});
+    }
+
+
+    function updateFlickr(user){
+        return User.update({"_id" : user._id}, user, {upsert: true});
+    }
+
+
+
+    function updateGoogle(user){
+      // return User.save({_id:user._id, googgle: user.googgle, local: user.local });
+        return User.update({"_id" : user._id}, user, {upsert: true});
+       // return User.update({"local.username" : user.local.username}, user, {upsert: true});
+    }
+
+
+    function createFlickr(user){
+        console.log("create " + user);
+        // return User.update()
+        return User.create(user);
+    }
+
+
+
+    //create a new User object, pass flickrUser into it and save
+    function saveFlickr(flickrUser){
+        var flickr = new User(flickrUser);
+
+        console.log(flickr);
+        return flickr.save();
+    }
+
+
+    function updateFacebook(user){
+        console.log("update " + user);
+        //return User.update({"local.username" : user.username}, user, {upsert: true});
+        // return User.update()
+       return User.update({"_id" : user._id}, user, {upsert: true});
+    }
+
+    function findUserByFlickrId(flickrID){
+        return User.findOne({"flickr.id" : flickrID});
+    }
+
+
     function findUserByFacebookId(facebookID){
        return User.findOne({"facebook.id" : facebookID});
+    }
+
+
+    function findUserByGoogleId(googleID){
+        return User.findOne({"google.id" : googleID});
     }
 
 
@@ -61,14 +142,15 @@ module.exports = function () {
     function  createUser(user) {
        // console.log("at model " + user);
         //user.createUser
-       return User.create(user);
-    }
-    function findUserById(userId){
-        return User.findById({_id: userId});
+       //return User.create(user);
+        return User.update({"user._id" : user.id}, user, {upsert: true});
     }
 
+
     function findUserByUsername(username){
-       return User.findOne({username: username});
+        //console.log(username);
+       return User.findOne({"local.username": username});
+        //return User.find({$text:{$search:"local:{username:"+ username+"}"}});
     }
 
     function updateUser(userId, user){

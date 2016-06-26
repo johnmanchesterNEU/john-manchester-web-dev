@@ -3,16 +3,17 @@
         .module("compareTo", [])
         .directive("compareTo", compareTo);
 
-    function compareTo(scope, element, attributes, ngModel) {
+    function compareTo() {
+        function link(scope, element, attributes, ngModel) {
+            ngModel.$validators.compareTo = function (modelValue) {
+                return (modelValue === scope.otherModelValue);
+            };
 
-        ngModel.$validators.compareTo = function (modelValue) {
-            return modelValue === scope.otherModelValue;
-        };
+            scope.$watch("otherModelValue", function () {
+                ngModel.$validate();
+            });
+        }
 
-        scope.$watch("otherModelValue", function () {
-            ngModel.$validate();
-        });
-    }
 
     return {
         require: "ngModel",
@@ -21,5 +22,5 @@
         },
         link: link
     };
-})();
+}})();
 

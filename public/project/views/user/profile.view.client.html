@@ -1,0 +1,103 @@
+<div class="container">
+    <div class="alert alert-success alert-dismissible"
+         ng-if="model.success"
+         role="alert">
+        <button ng-click="model.close()"
+                type="button"
+                class="close"
+                data-dismiss="alert"
+                aria-label="Close"></button>
+        <span aria-hidden="true">&times;</span></button>
+        <strong>Success!</strong> Your profile was saved.
+    </div>
+    <div class="alert alert-warning alert-dismissible"
+         ng-if="model.error"
+         role="alert">
+        <button ng-click="model.close()"
+                type="button"
+                class="close"
+                data-dismiss="alert"
+                aria-label="Close"></button>
+        <span aria-hidden="true">&times;</span></button>
+        <strong>Error!</strong> User not found.
+    </div>
+    <form name="profile">
+        <div class="form-group">
+            <label for="username">
+                Username
+            </label>
+            <input ng-model="model.user.username"
+                   ng-disabled="true"
+                   type="text"
+                   class="form-control"
+                   id="username"
+                   placeholder="Username"/>
+        </div>
+        <div class="form-group">
+            <label for="password">
+                Password
+            </label>
+            <input ng-model="model.user.password"
+                   type="password"
+                   class="form-control"
+                   id="password"
+                   placeholder="password"/>
+        </div>
+        <div class="form-group">
+            <label for="verify-password">
+                Verify Password
+            </label>
+            <input ng-model="model.user.verifypassword"
+                   type="password"
+                   class="form-control"
+                   id="verify-password"
+                   placeholder="password"/>
+        </div>
+        <div class="form-group">
+            <label for="email">
+                Email address
+            </label>
+            <input ng-model="model.user.email"
+                   type="email"
+                   class="form-control"
+                   id="email"
+                   ng-pattern-restrict="^([\w!#$%&'*/~|`}{^+-]+(.|@)?)*$"
+                   placeholder="johnsmith@somewebsite.com"/>
+        </div>
+        <div class="form-group">
+            <label for="first-name">
+                First Name
+            </label>
+            <input ng-model="model.user.firstName"
+                   type="text"
+                   class="form-control"
+                   id="first-name"
+                   ng-pattern-restrict="^[a-zA-Z\-]*$"
+                   placeholder="Smith"/>
+        </div>
+        <div class="form-group">
+            <label for="last-name">
+                Last Name
+            </label>
+            <input ng-model="model.user.lastName"
+                   type="text"
+                   class="form-control"
+                   id="last-name"
+                   ng-pattern-restrict="^[a-zA-Z\-]*$"
+                   placeholder="Smith"/>
+        </div>
+    </form>
+    <a class="btn btn-primary btn-block"
+       href="#/user/{{model.user._id}}/website">Websites</a>
+    <a class="btn btn-warning btn-block"
+       ng-click="model.unregister()">Unregister</a>
+    <a class="btn btn-danger  btn-block"
+       ng-click="model.logout()">Logout</a>
+</div>
+<nav class="navbar navbar-default navbar-fixed-bottom">
+    <div class="container-fluid">
+        <a href="#/profile" class="navbar-center pull-right">
+            <span class="glyphicon glyphicon-user"></span>
+        </a>
+    </div>
+</nav>

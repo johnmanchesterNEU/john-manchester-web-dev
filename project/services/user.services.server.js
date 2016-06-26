@@ -4,12 +4,12 @@ var FacebookStrategy = require('passport-facebook').Strategy;
 var bcrypt = require("bcrypt-nodejs");
 //var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 //var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
-//var GoogleStrategy = require('passport-google-oauth2').Strategy;
-var GoogleStrategy = require('passport-google-oauth20').Strategy;
+var GoogleStrategy = require('passport-google-oauth2').Strategy;
+//var GoogleStrategy = require('passport-google-oauth20').Strategy;
 //var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 var FlickrStrategy = require('passport-flickr').Strategy;
-
-
+//var session = require('express-session');
+//app.use(passport.initialize());
 //var GoogleStrategy2 = require('passport-google').Strategy;
 
 
@@ -18,317 +18,108 @@ var FlickrStrategy = require('passport-flickr').Strategy;
 // maps api key AIzaSyCBKNUZMB4rHw4NOz2-3XyV_6MkWnfZHBQ
 
 module.exports = function (app, models) {
-    //var userModel = models.userModel;
+    var userModel = models.userModel;
 
-    var flickrConfig = {
-        consumerKey     : process.env.FLICKR_CONSUMER_KEY,
-        consumerSecret : process.env.FLICKR_CONSUMER_SECRET,
-        callbackURL  : process.env.FLICKR_CALLBACK_URL
+
+    var localConfig = {
+        userNameField : 'username',
+        passwordField : 'password',
+        passReqToCallback : true
     }
 
+// process the signup form
+    app.post('/signup', passport.authenticate('local-signup', {
+        successRedirect : '/profile', // redirect to the secure profile section
+        failureRedirect : '/signup' // redirect back to the signup page if there is an error
+    }));
 
-  //  console.log(process.env.FLICKR_CONSUMER_KEY + " " + process.env.FLICKR_CONSUMER_SECRET + " " + process.env.FLICKR_CALLBACK_URL);
 
-    var facebookConfig = {
-        clientID     : process.env.FACEBOOK_CLIENT_ID,
-        clientSecret : process.env.FACEBOOK_CLIENT_SECRET,
-        callbackURL  : process.env.FACEBOOKP_CALLBACK_URL,
-        profileFields: ['id', 'first_name', 'last_name', 'birthday','location', 'emails']
-    };
+  
 
+
+
+
+    app.post('/project/register', register);
+
+
+    function register(req, res) {
+        console.log(req.body);
+
+
+        req.body.password = bcrypt.hashSync(req.body.password);
+        var user = {"local" : req.body};
+        console.log(user);
+
+        userModel.register(user).then(
+            function (newUser) {
+                req.login(newUser, function (err) {
+                    if (err) {
+                        res.status(400).send(err);
+                    } else {
+                        res.json(newUser);
+                    }
+                })
+            },
+            function (error) {
+                res.status(400).send("Can register user");
+            })
+
+    }
 
 
     var googleConfig = {
-        clientID     : process.env.GOOGLE_CLIENT_ID,
-        clientSecret : process.env.GOOGLE_CLIENT_SECRET,
-        callbackURL  : process.env.GOOGLE_CALLBACK_URL
+        clientID: process.env.GOOGLE_CLIENT_ID,
+        clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+        callbackURL: process.env.GOOGLE_CALLBACK_URL,
+        passReqToCallback: true
     };
 
-
-    //console.log(process.env.GOOGLE_CLIENT_ID + " " + process.env.GOOGLE_CLIENT_SECRET + " " + process.env.GOOGLE_CALLBACK_URL);
-
-
-    app.get('/project/auth/flickr', passport.authenticate('flickr'));
-    //app.get('/project/auth/flickr',
-     //   passport.authenticate('flickr'),
-      //  function(req, res){
-            // The request will be redirected to Flickr for authentication, so this
-            // function will not be called.
-       // });
-
-  /*  app.get('/project/auth/flickr/callback',
-        passport.authenticate('flickr', { failureRedirect: '/login' }),
-        function(req, res) {
-            // Successful authentication, redirect home.
-            res.redirect('/');
-        });
-*/
-  //  app.get('/project/auth/flickr', passport.authenticate('flickr'));
-    app.get('/project/auth/flickr/callback',
-        passport.authenticate('flickr', {
-            successRedirect: '/#/profile',
-            failureRedirect: '/#/login'
-        }));
-
-
-
-    //{ scope:
-     //   [ 'https://www.googleapis.com/auth/plus.login',
-      //      , 'https://www.googleapis.com/auth/plus.profile.emails.read' ]
- //   app.get('/project/auth/google', passport.authenticate('google',    { scope:
-  //      [ 'https://www.googleapis.com/auth/plus.login',
-   //         , 'https://www.googleapis.com/auth/plus.profile.emails.read' ]}));
-
-     app.get('/project/auth/google', passport.authenticate('google',  {scope: ['profile','email']}));
+    app.get('/project/auth/google', passport.authenticate('google', {scope: ['profile', 'email']}));
     app.get('/project/auth/google/callback',
         passport.authenticate('google', {
-            successRedirect: '/#/profile',
-            failureRedirect: '/#/login'
+            successRedirect: '/',
+            failureRedirect: '/'
         }));
-/*
-
-    app.get("/auth/google", passport.authenticate('google', {scope:['profile', 'email']}));
-    app.get("/auth/google/callback", passport.authenticate('google', {
-        successRedirect: '/project/#/profile/',
-        failureRedirect: '/project/#/login'
-    }));
-*/
-
-    //Authenticate facebook user
-    app.get("/project/auth/facebook", passport.authenticate('facebook', { authType: 'rerequest', scope: ['public_profile','user_birthday', 'user_location', 'email'] }));
-    //passport.authenticate('facebook', {authType: 'rerequest', scope: 'public_profile,user_birthday,user_location,email'}));
-
-//    app.get("/project/auth/facebook", passport.authenticate('facebook', {scope:'email'}));
-    app.get("/project/auth/facebook/callback", passport.authenticate('facebook', {
-        successRedirect: '/#/register/',
-        failureRedirect: '/#/login'
-    }));
 
 
-    //app.get('/profile', authenticate, function(req, res) {
-    //    console.log(req);
-    //    res.render('/profile/' + req.user._id);
-    //});
-
-
-
-   // app.get("/auth/facebook/callback", passport.authenticate('facebook', function(err,user,info) {
-   // }));
-
-
-
-    /*app.get('/profile', authenticate, function(req, res) {
-        console.log(reg.user.id);
-        res.render('/profile/', {
-            user : req.user.id // get the user out of session and pass to template
-        });
-    });*/
-
-    app.post("/api/register", register);
-    app.get("/api/loggedIn", loggedIn);
-    app.post("/api/logout", logout);
-
-    app.post  ('/api/login', passport.authenticate('login'), login);
-
-    app.post("/api/logout", logout);
-
-    app.get("/api/user", findUserByCredentials);
-    //app.get("/api/user?username=username&password=password", findUserByCredentials);
-    app.get("/api/user?username=username", findUserByUsername);
-    app.post("/api/user", createUser);
-    app.get("/api/users", getUsers);
-    app.get("/api/user/:userId", findUserById);
-    app.put("/api/user/:userId", updateUser);
-    app.delete("/api/user/:userId", deleteUser);
-
-
-    passport.use('login', new LocalStrategy(localStrategy));
-    passport.serializeUser(serializeUser);
-    passport.deserializeUser(deserializeUser);
-
-    passport.use('facebook', new FacebookStrategy(facebookConfig, facebookLogin));
-    //passport.use('facebook', new FacebookStrategy(facebookConfig, facebookLogin));
-
-
-//    passport.use('google', new GoogleStrategy(googleConfig, googleLogin));
-
-    passport.use(new GoogleStrategy(googleConfig, googleStrategy));
-
-    function googleStrategy(token, refreshToken, profile, done) {
-        console.log(profile);
-
-        var pro = profile._json;
-
-      //  console.log(profile.id);
-        console.log(pro.id);
-        console.log(pro.name.givenName);
-        console.log(pro.name.familyName);
-        console.log(pro.gender);
-        console.log(profile.emails[0].value);
-
-
-        return done(null, profile);
+    //flickr configuration
+    var flickrConfig = {
+        consumerKey: process.env.FLICKR_CONSUMER_KEY,
+        consumerSecret: process.env.FLICKR_CONSUMER_SECRET,
+        callbackURL: process.env.FLICKR_CALLBACK_URL,
+        passReqToCallback: true
     }
 
 
-   // passport.use('flickr', new FlickrStrategy(flickrConfig, FlickrStrategy));
+    var facebookConfig = {
+        clientID: process.env.FACEBOOK_CLIENT_ID,
+        clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
+        callbackURL: process.env.FACEBOOKP_CALLBACK_URL
+    }
+
+    passport.use('facebook', new FacebookStrategy(facebookConfig, facebookLogin));
+
+    app.get("/project/auth/facebook", passport.authenticate('facebook'));
+    app.get("/project/auth/facebook/callback", passport.authenticate('facebook', {
+        successRedirect: '/project/#/profile',
+        failureRedirect: '/project/#/login'
+    }));
 
 
-  //  passport.use(new FlickrStrategy(flickrConfig,
-    //        function(token, tokenSecret, profile, done) {
-        /*User.findOrCreate({ flickrId: profile.id }, function (err, user) {
-         return done(err, user);
-         }
-         );*/
-      //        console.log(profile);
-      //     }
-       // ));
-
-
-    passport.use(new FlickrStrategy(flickrConfig, FlickrLogin));
-
-
-      function FlickrLogin (token, tokenSecret, profile, done){
-          console.log(profile);
-          //profile.id
-          //profile.displayName
-          console.log(profile.id);
-          var name = profile.fullName.split(" ");
-          var firstName = name[0];
-          var lastName = name[1];
-
-          console.log(firstName);
-          console.log(lastName);
-          return done(null, profile);
-     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-   // passport.use(new FlickrStrategy(flickrConfig,
-    //    function(token, tokenSecret, profile, done) {
-            /*User.findOrCreate({ flickrId: profile.id }, function (err, user) {
-             return done(err, user);
-             }
-             );*/
-      //      console.log(profile);
-     //   }
-    //));
-
-//    passport.use(new FlickrStrategy({
- //           consumerKey: "9eae9e2a0a7438976a234fc16ff535fa",
-  //          consumerSecret: "111000dbf1b37388",
-   //         callbackURL: "http://127.0.0.1:3000/auth/flickr/callback"
-    //    },
-     //   function(token, tokenSecret, profile, done) {
-            /*User.findOrCreate({ flickrId: profile.id }, function (err, user) {
-                return done(err, user);
-            }
-            );*/
-       //     console.log(profile);
-    //    }
-   // ));
-
-
-
-
-
-  //  function FlickrStrategy (token, tokenSecret, profile, done){
-  //      console.log(profile);
-  //  }
-
-
-
-
-
-//    function googleStrategy(token, refreshToken, profile, done) {
- //       console.log(profile);
-        /*userModel
-            .findUserByFacebookId(profile.id)
-            .then(
-                function(facebookUser) {
-                    if(facebookUser) {
-                        return done(null, facebookUser);
-                    } else {
-                        facebookUser = {
-                            username: profile.displayName.replace(/ /g,''),
-                            facebook: {
-                                token: token,
-                                id: profile.id,
-                                displayName: profile.displayName
-                            }
-                        };
-                        userModel
-                            .createUser(facebookUser)
-                            .then(
-                                function(user) {
-                                    done(null, user);
-                                }
-                            );
-                    }
-                }
-            );*/
-   // }
-
-
-
-
-
-
-
+    passport.use(new GoogleStrategy(googleConfig, googleStrategy));
 
 
     function facebookLogin(token, refreshToken, profile, done) {
         console.log(profile);
-        //get json object for easier parsing
-        var pro =  profile._json;
-
-        var id = pro.id;
-        console.log(id);
-        var firstName = pro.first_name;
-        console.log(firstName);
-        var lastName = pro.last_name;
-       console.log(lastName);
-
-        var locationID = pro.location.id;
-        console.log(locationID);
-
-
-
-        var locationName = pro.location.name.split(", ");
-        var city = locationName[0];
-        var state = locationName[1];
-        console.log(city);
-        console.log(state);
-
-        var email = pro.email;
-
-        console.log(email);
-        var birthday = new Date(pro.birthday);
-        console.log(birthday);
-        //var id = profile.id;
-        //var birthday =  new Date(profile.birthday);
-        //var firstName = profile.name.givenName;
-        //var lastName = profile.name.familyName;
-        return done(null, profile);
-       /* userModel
-            .findUserByFacebookId(profile.id)
+        userModel
+            .findFacebookUser(profile.id)
             .then(
-                function(facebookUser) {
-                    if(facebookUser) {
+                function (facebookUser) {
+                    if (facebookUser) {
                         return done(null, facebookUser);
                     } else {
                         facebookUser = {
-                            username: profile.displayName.replace(/ /g,''),
+                            username: profile.displayName.replace(/ /g, ''),
                             facebook: {
                                 token: token,
                                 id: profile.id,
@@ -338,23 +129,206 @@ module.exports = function (app, models) {
                         userModel
                             .createUser(facebookUser)
                             .then(
-                                function(user) {
+                                function (user) {
                                     done(null, user);
                                 }
                             );
                     }
                 }
-            );*/
+            );
+    }
+
+
+    function googleStrategy(request, token, refreshToken, profile, done) {
+        //console.log(request);
+        //console.log(profile);
+        // if the user is not already logged in
+        if (!request.user) {
+            userModel
+                .findUserByGoogleId(profile.id)
+                .then(function (googleUser) {
+                        if (googleUser) {
+                            console.log("found google");
+                            return done(null, googleUser);
+                        } else {
+                            console.log("no google");
+                            // grab the json object for easy parsing
+                            var pro = profile._json;
+
+                            googleUser = {
+                                google: {
+                                    token: token,
+                                    id: profile.id,
+                                    email: profile.emails[0].value
+                                }
+                            }
+
+                            if (!googleUser.local) {
+                                googleUser.local = {
+                                    username: profile.emails[0].value,
+                                    firstName: pro.name.givenName,
+                                    lastName: pro.name.familyName,
+                                    email: profile.emails[0].value
+                                }
+                            }
+
+                            userModel
+                                .updateGoogle(googleUser)
+                                .then(function (user) {
+                                        return done(null, user);
+                                    },
+                                    function (error) {
+                                        return done(error);
+                                    })
+
+                        }
+                    },
+                    function (error) {
+                        return done(error);
+                    })
+        } else {
+            // user already exists and is logged in
+            var user = request.user;
+
+            user.google.id = profile.id;
+            user.google.token = token;
+            user.google.email = profile.emails[0].value;
+
+            userModel
+                .updateGoogle(user)
+                .then(function (user) {
+                    return done(null, user);
+                }, function (error) {
+                    return done(error, user);
+                })
+        }
+
+
+        //var pro = profile._json;
+
+        //  console.log(profile.id);
+        // console.log(pro.id);
+        // console.log(pro.name.givenName);
+        // console.log(pro.name.familyName);
+        // console.log(pro.gender);
+        // console.log(profile.emails[0].value);
+
+
+        //return done(null, profile);
+    }
+
+
+    /*  app.get('/project/auth/flickr/',
+     passport.authenticate('flickr'));*/
+
+    app.get("/project/auth/flickr/username/:uid/password/:pid", function (req, res, next) {
+
+        // console.log(req.params.uid);
+        // console.log(req.params.pid);
+
+        var state = {
+            username: req.params.uid,
+            password: req.params.pid
+        }
+
+        req.session.state = state;
+        // in Oauth2, its more like : args.scope = reqId, and args as authenticate() second params
+        passport.authenticate('flickr')(req, res, next);
+    }, function () {
+    });
+
+
+    app.get('/project/auth/flickr/callback/',
+        passport.authenticate('flickr', {
+            successRedirect: '/project/#/profile',
+            failureRedirect: '/project/#/login'
+        }));
+
+
+    // If we are already logged in and not connected to flickr
+    app.get('/project/connect/flickr', passport.authorize('flickr'));
+    app.get('/project/connect/flickr/callback',
+        passport.authorize('flickr', {
+            successRedirect: '/profile',
+            failureRedirect: '/'
+        }));
+
+
+    passport.use(new FlickrStrategy(flickrConfig, FlickrLogin));
+    function FlickrLogin(req, token, tokenSecret, profile, done) {
+        //console.log(req);
+
+        // var flickrUser = new userModel();
+
+
+        var fullName = profile.fullName.split(" ");
+        var newUser = {
+            "local": {
+                "username": req.session.state.username,
+                "password": bcrypt.hashSync(req.session.state.password),
+                "firstName": fullName[0],
+                "lastName": fullName[1]
+            },
+            "flickr": {
+                "id": profile.id,
+                "token": token,
+                "displayName": profile.displayName
+            }
+        };
+
+
+        userModel.saveFlickr(newUser).then(
+            function (flickrUser) {
+                console.log("saved: " + flickrUser);
+                return done(null, flickrUser);
+            }, function (error) {
+                console.log(error);
+                //You can not override another user name
+                return done(error);
+            });
+        ///console.log(flickrUser);
+    }
+
+    //To test if your username exists
+    app.get("/unique/:user", findUniqueUsername);
+
+
+    function findUniqueUsername(req, res) {
+        var username = req.params.user;  //req.query['username'];
+        // console.log("hey " + username);
+        // console.log(username);
+        userModel
+            .findUserByUsername(username)
+            .then(
+                function (user) {
+                    if (user === null) {
+                        console.log("unique");
+                        return res.send(true);
+                    } else {
+                        console.log("not");
+                        return res.send(false);
+                    }
+
+                    //   console.log("wassup");
+                    //console.log(user);
+                    //return res.json(user);
+                },
+                function (err) {
+                    console.log(err);
+                    return res.send(false);
+                }
+            )
     }
 
 
     function serializeUser(user, done) {
+        console.log("serialize: " + user);
         done(null, user);
     }
 
     function deserializeUser(user, done) {
-        done(null, user);
-      /*  userModel
+        console.log("deserialize: " + user);
+        userModel
             .findUserById(user._id)
             .then(
                 function (user) {
@@ -363,20 +337,14 @@ module.exports = function (app, models) {
                 function (err) {
                     done(err, null);
                 }
-            );*/
-    }
-
-
-    function login(req, res) {
-        var user = req.user;
-        res.json(user);
+            );
     }
 
 
     function authenticate(req, res, next) {
         console.log(req.user);
         console.log(req.isAuthenticated());
-        if(req.isAuthenticated()) {
+        if (req.isAuthenticated()) {
             next();
         } else {
             res.send(403);
@@ -385,276 +353,19 @@ module.exports = function (app, models) {
 
 
 
-    function comparePassword(password, userPassword) {
-        bcrypt.compare(password, userPassword, function (err, isPasswordMatch) {
-            if (err) {
-                return err;
-            }else{
-                console.log("result: " +isPasswordMatch)
-              return isPasswordMatch;
-            }
-        });
+    function logout(req, res) {
+        req.logout();
+        res.send(200);
     }
 
-
-    function compare(password, userPassword, callback) {
-        bcrypt.compare(password, userPassword, callback);
-    }
-
-
-
-
-    // yes, no, idk --> server is down
-    function localStrategy(username, password, done) {
-        console.log(username);
-        console.log(password);
-        console.log(done);
-        //userModel
-        //  .findUserByCredentials(username, password)
-        userModel
-            .findUserByUsername(username)
-            .then(
-                function (user) {
-                   // console.log("yo " + user);
-                    if(user){
-                    compare(password, user.password, function(error,result){
-                        if(result){
-                            console.log("pass " + result);
-                            return done(null, user);
-                        }else{
-                            console.log("fail " + result);
-                            return done(null, false);
-                        }
-
-                    })}else{
-                        return done(null, false);
-                    }}
-                ,
-                function (err) {
-                    console.log("err " + err);
-                    if (err) {
-                        return done(err);
-                    }
-                }
-            );
-    }
-
-
-    function register(req, res) {
-        var user = req.body;
-        user.password = bcrypt.hashSync(user.password);
-        // var username = req.body.user.username;
-        // var password = req.body.user.password;
-        userModel
-            .createUser(user)
-            .then(
-                function (user) {
-                    console.log(user);
-                    if (user) {
-                        req.login(user, function (error) {
-                            if (error) {
-                                console.log(error);
-                                res.status(400).send(error);
-                            } else {
-                                res.json(user);
-                            }
-                        })
-                    }
-                }, function (error) {
-                    if (error.code == 11000) {
-                        // console.log("OOOOO");
-                        //res
-                        res.status(500).send("User name already exists")
-                    } else {
-                        //res.statusCode(200);
-                        res.status(400).send("An error has occurred");
-                    }
-                }
-            )
-
-    }
-
-
-    function loggedIn(req, res) {
-        console.log("here " + req);
+    function loggedin(req, res) {
         if(req.isAuthenticated()) {
             res.json(req.user);
         } else {
-            res.send(false);
+            res.send('0');
         }
     }
 
-
-    function logout(req, res) {
-        req.logOut();
-        res.sendStatus(200);
-    }
-
-    /*
-
-     if(user && bcrypt.compareSync(password, user.password)) {
-     return done(null, user);
-     } else {
-     return done(null, false);
-     }
-     */
-
-
-    // sends a request to create a user at the database
-    function createUser(req, res) {
-        var user = req.body;
-        // console.log("here: " + user);
-        userModel
-            .createUser(user)
-            .then(
-                function (user) {
-                    console.log("hit server");
-                    //user.verify = user.password;
-                    res.json(user);
-                    //res.statusCode(200);
-                },
-                function (error) {
-                    //console.log("EEE " + error)
-                    if (error.code == 11000) {
-                        // console.log("OOOOO");
-                        //res
-                        res.status(500).send("User name already exists")
-                    } else {
-                        //res.statusCode(200);
-                        res.status(400).send("An error has occurred");
-                    }
-                }
-            );
-    }
-
-    // sends a request to delete a user in the database given an ID
-    function deleteUser(req, res) {
-        var userId = req.params.userId;
-        userModel
-            .deleteUser(userId)
-            .then(
-                function (user) {
-                    res.json(user);
-                },
-                function (error) {
-                    res.status(error.statusCode).send("Could not delete the user on the server");
-                })
-    }
-
-    //Sends a request to update the user at the database
-    function updateUser(req, res) {
-        var userId = req.params.userId;
-        var user = req.body;
-        user.password = bcrypt.hashSync(user.password);
-        userModel
-            .updateUser(userId, user)
-            .then(
-                function (user) {
-                    res.json(user);
-                },
-                function (error) {
-                    res.status(error.statusCode).send("Could update the user on the server.");
-                })
-    }
-
-    //Asks the database for some user given id and returns the user
-    function findUserById(req, res) {
-        var userId = req.params.userId;
-        // console.log(req.session.currentUser);
-        //console.log(newUser);
-        userModel
-            .findUserById(userId)
-            .then(
-                function (user) {
-                    res.json(user);
-                },
-                function (error) {
-                    res.status(400).send("Could not find user on server");
-                })
-
-        /* var userId = req.params.userId;
-         userModel
-         .findUserById(userId)
-         .then(
-         function(user){
-         res.send(user);
-         },
-         function (error) {
-         res.status(404).send("User with ID: " + id + " not found");
-         }
-         )*/
-        /* var userId = req.params.userId;
-         for (var i in users) {
-         if (userId === users[i]._id) {
-         res.send(users[i]);
-         }
-         }
-         res.send({});*/
-    }
-
-    //Returns all users in the database
-    function getUsers(req, res) {
-        res.send(userModel.getUsers());
-        /*var username = req.query["username"];
-         var password = req.query["password"];
-         if (username && password) {
-         findUserByCredentials(username, password, res);
-         } else if (username) {
-         findUserByUsername(username, res);
-         } else {
-         res.send(users);
-         }*/
-        //res.send({title:"Muahhhahahhaah"});
-    }
-
-    //finds a user by a username and password
-    function findUserByCredentials(req, res) {
-        var username = req.query['username'];
-        var password = req.query['password'];
-        userModel
-            .findUserByCredentials(username, password)
-            .then(
-                function (user) {
-
-                    console.log(req.session);
-
-                    res.json(user);
-                },
-                function (err) {
-                    res.statusCode(404).send(err);
-                }
-            )
-        // for(var i in users) {
-        //     if(users[i].username === username && users[i].password === password) {
-        //         res.send(users[i]);
-        //         return;
-        //     }
-        // }
-        // res.send({});
-    }
-
-    function findUserByUsername(username, res) {
-        console.log(username);
-        userModel
-            .findUserByUsername(username)
-            .then(
-                function (user) {
-
-                    // console.log(req.session);
-
-                    res.json(user);
-                },
-                function (err) {
-                    res.statusCode(404).send(err);
-                }
-            )
-
-        /*  for (var u in users) {
-         if (users[u].username === username) {
-         res.send(users[u]);
-         return;
-         }
-         }
-         res.send({});*/
-    }
 };
+
+

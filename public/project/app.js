@@ -1,5 +1,15 @@
 (function(){
-    angular.module("Project",["ngRoute", "ngPatternRestrict", 'ngMaterial', "ngMessages", "material.svgAssetsCache", "dropdown"]);
+    angular.module("Project",
+        [
+            "ngRoute",
+            "dropdown",
+            "ngPatternRestrict" ,
+            'compareTo',
+            'wcUnique',
+            'ngMaterial',
+            "ngMessages",
+            "material.svgAssetsCache",
+        ]);
    // angular.module("WebAppMaker", ['ngPatternRestrict']);
     
 })();

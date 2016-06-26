@@ -1,22 +1,31 @@
-<div id="bg" class="background2">
+<div ng-pattern-restrict id="bg" class="background2">
     <header class="nav whitefrost">
-        <a class="hand" ng-click="model.setScroll('#myname',0)"> Name </a>
-            >
-            <a class="hand" ng-click="model.setScroll('#userName',1)"> User Name </a>
-            >
-            <a class="hand" ng-click="model.setScroll('#gender',2)">Gender</a>
-            >
-            <a class="hand" ng-click="model.setScroll('#country',3)">Country</a>
+        <a class="hand" ng-click="model.setScroll('#myname',1)"> Name </a>
+        >
+        <a class="hand" ng-click="model.setScroll('#userName',2)"> User Name </a>
+        >
+        <a class="hand" ng-click="model.setScroll('#gender',3)">Gender</a>
+        >
+        <a class="hand" ng-click="model.setScroll('#country',4)">Country</a>
 
     </header>
-    <section id="main">
-        <article id="myname" class="panel slidedown" ng-animate="'animate'">
+    <form name="signUp" novalidate>
+        <section id="main">
+            <article id="signup" class="panel slidedown" ng-animate="'animate'">
+            <span class="all2">
+                    <span class="fontwhite f22"> Sign up <a id="cdown" class="hand name" ng-click="model.firstjump()">
+                    <span class="glyphicon glyphicon-arrow-down"></span></a> or <a class="name noline hand" ng-click="model.social()"><span class="fa fa-link"></span> a social media account</a> with us...
+                 <input id="hidden" type="radio" style="height: 0; width: 0; padding: 0; margin: 0; opacity: 0"/></span>
+
+       </span>
+            </article>
+            <article id="myname" class="panel slidedown" ng-animate="'animate'">
             <span class="all2">
                 <label class="fontwhite" for="firstName">What is your name? First, here please...*</label>
                 <input id="firstName"
-                       ng-model="firstName"
+                       ng-model="model.user.firstName"
                        type="text"
-                       name="focus"
+                       name="firstName"
                        class="search-box full-pill"
                        placeholder="First Name"
                        ng-pattern-restrict="^[a-zA-Z0-9_\-]*$" required/>
@@ -24,41 +33,85 @@
                 <label class="fontwhite" for="LastName">...And your last.*</label>
                 <br/>
                  <input id="LastName"
-                        ng-model="lastName"
+                        ng-model="model.user.lastName"
                         type="text"
-                        name="focus"
+                        name="lastName"
                         class="search-box full-pill"
                         placeholder="Last Name"
                         ng-pattern-restrict="^[a-zA-Z0-9_\-]*$" required/>
        </span>
-        </article>
-        <article id="userName" class="panel slidedown" ng-animate="'animate'">
-            <span class="all2">
-                <label class="fontwhite" for="user">Hey <b class="name"> {{firstName}}</b>. Think of User Name. <br> <p class="indent">We'll make sure it's unique*</p></label>
+            </article>
+            <article id="userName" class="panel slidedown" ng-animate="'animate'">
+            <span class="all2 iblock">
+                <label class="fontwhite" for="user">Hey <b class="name"> {{user.firstName}}</b>. Think of a Username. <br> <p
+                        class="indent">We'll make sure it's unique*</p></label>
+
+                <div class="full-pill search-box bg-white">
             <input id="user"
-                   ng-model="name" type="text" name="focus" class="search-box pill-left" placeholder="Enter Name"
-                   ng-pattern-restrict="^[a-zA-Z0-9_\-]*$" required/><button id="nameButton" class="submit"
-                                                                             ng-click="model.next()"
-                                                                             aria-hidden="true"></button>
+                   class="input-nowidth"
+                   ng-model="model.user.username"
+                   type="text"
+                   name="username"
+                   placeholder="Enter Name"
+                   data-wc-unique='{ "db": "user", "key":"local.username" }'
+                   ng-pattern-restrict="^[a-zA-Z0-9_\-]*$"
+                   required/><label ng-if="signUp.username.$invalid" class="keyboard fa fa-keyboard-o"
+                                    for="user"></label><a ng-click="model.next()" class="check hand"
+                                                          ng-if="!signUp.username.$invalid">OK!</a></div>
 
 
        </span>
-        </article>
-        <article class="panel slidedown" id="gender">
+            </article>
+            <article id="password" class="panel slidedown" ng-animate="'animate'">
+            <span class="all2">
+
+                 <label class="fontwhite" for="thepassword">Type a password.</label>
+                <div class="form-group">
+    <input class="form-control full-pill search-box"
+           id="thepassword"
+           name="passwordPop"
+           ng-model="model.user.password"
+           type="password" name="focus"
+           placeholder="Enter Password"
+           required/>
+  <div ng-show="signUp.passwordPop.$touched && signUp.passwordPop.$invalid"><span class="tip">Password is Required</span></div></div>
+                <div class="form-group">
+                    <input class="form-control full-pill search-box" id="passwordRep" name="passwordRep" ng-model="repeat"
+           type="password" name="focus" placeholder="Re-enter Password" compare-to="model.user.password" required/>
+                <div ng-show="signUp.passwordPop.$touched &&
+                  signUp.passwordRep.$invalid"><span class="tip">Passwords must match.</span></div></div>
+                </span>
+            </article>
+            <article id="email" class="panel slidedown" ng-animate="'animate'">
+            <span class="all2">
+                <label class="fontwhite" for="emailInput">Can we have your email? We Promise we won't spam.*</label>
+                <input id="emailInput"
+                       ng-model="user.email"
+                       name="email"
+                       class="search-box full-pill"
+                       type="email"
+                       placeholder="someemail@email.com"
+                       ng-pattern-restrict="^([\w!#$%&'*/~|`}{^+-]+(.|@)?)*$"/>
+       </span>
+            </article>
+            <article class="panel slidedown" id="gender">
             <span class="all">
             <fieldset class="ta-right">
                 <legend class="borderWhite fontwhite largeFont">What Best describes You?</legend>
                 <input type="radio"
+                       ng-model="model.user.gender"
                        class="radio-custom"
                        id="female"
                        name="gender"
                        value="female"/><label for="female"><i id="flabel" class="fontwhite fa fa-female"/></label><br/>
                 <input type="radio"
+                       ng-model="model.user.gender"
                        class="radio-custom"
                        id="male"
                        name="gender"
-                       value="female"/><label for="male"><i id="mlabel" class="fontwhite fa fa-male"/></label><br/>
+                       value="male"/><label for="male"><i id="mlabel" class="fontwhite fa fa-male"/></label><br/>
                 <input type="radio"
+                       ng-model="model.user.gender"
                        class="radio-custom"
                        id="transgender"
                        name="gender"
@@ -67,48 +120,97 @@
                 <input type="radio"
                        class="radio-custom"
                        id="other"
+                       ng-model="model.user.gender"
                        name="gender"
                        value="other"/><label for="other"><i id="olabel"
                                                             class="fontwhite fa fa-hand-spock-o"></i></label><br/>
-                <input type="radio"
-                       class="radio-custom"
-                       id="fill"
-                       name="gender"
-                       valu="{{input.gender}}"><input type="text" class="under2 fontwhite"  id="ginput"/><label for="ginput" class="fontwhite">(fill in the blank)</label>
             </fieldset>
                 </span>
-        </article>
-        <article id="country" class="panel slidedown">
+            </article>
+            <article id="country" class="panel slidedown">
             <span class="all2">
                 <label class="fontwhite" for="countryInput">Where do you live?</label><br/>
-                <input class="under fontwhite" id="countryInput" placeholder="Type of Select Country"
-                       ng-model="search"   autocorrect="off" autocomplete="off">
+                <input name="country" class="under fontwhite" id="countryInput" placeholder="Type of Select Country"
+                       ng-model="model.user.country" autocorrect="off" autocomplete="off" required>
                 <div class="hand" id="navcontainer">
                 <ul id='uItem'>
-                    <li dropdown ng-repeat="country in model.countries| filter:search" value="country"><a>{{country.name}}</a></li>
+                    <li ng-repeat="country in model.countries| filter:model.user.country" value="country"
+                        ng-click="model.choose(country.name)"><a>{{country.name}}</a></li>
                 </ul></div>
 
        </span>
-        </article>
-    </section>
-
+            </article>
+        </section>
+    </form>
 </div>
-<nav class="navbar navbar-default navbar-fixed-bottom whitefrost">
-    <div class="container-fluid">
-        <ul class="tileMe">
-            <li><a class="hand" ng-click="model.setScroll('#myname',0)">1</a></li>
-            <li><a class="hand" ng-click="model.setScroll('#userName',1)">2</a></li>
-            <li><a class="hand" ng-click="model.setScroll('#gender',2)">3</a></li>
-            <li><a class="hand" ng-click="model.setScroll('#country',3)">4</a></li>
-        </ul>
 
-        <uib-progressbar animate="false" value="dynamic" type="success"><b>{{dynamic}}%</b></uib-progressbar>
-
-        <button class="navbut" id="up" ng-click="model.previous()" class="navbar-center pull-right hand" disabled>
+<nav class="navbarbottom whitefrost">
+    <span class="centeruser"><button ng-click="model.submitUser()" class="btn usersubmit" ng-disabled="signUp.$invalid">Submit</button>
+        <button class="navbut" id="up" ng-click="model.previous()" disabled>
             <span class="glyphicon glyphicon-chevron-up"></span>
-        </button>
-        <button class="navbut" id="down" ng-click="model.next()" class="navbar-center pull-right hand">
-            <span class="glyphicon glyphicon-chevron-down"></span>
-        </button>
-    </div>
+        </button><button class="navbut" id="down" ng-click="model.next()">
+        <span class="glyphicon glyphicon-chevron-down"></span>
+    </button>
+    </span>
 </nav>
+
+
+<div id="dialog" title="">
+    <form name="socialSignup" id="socialSignup" novalidate>
+        <div class="form-group">
+            <input class="form-control"
+                   id="user_pop"
+                   name="userPop"
+                   ng-model="user.pop.username"
+                   type="text"
+                   data-wc-unique='{ "db": "user", "key":"local.username" }'
+                   placeholder="Enter Username" ng-pattern-restrict="^[a-zA-Z0-9_\-.@]*$" required/>
+            <span class="error"
+                  ng-show="socialSignup.userPop.$touched && socialSignup.userPop.$error.required">Username is required.</span>
+            <span class="error" ng-show="socialSignup.userPop.$dirty && socialSignup.userPop.$error.unique">Username already in use</span>
+        </div>
+        <div class="form-group">
+            <input class="form-control"
+                   id="password_pop"
+                   name="passwordPop"
+                   ng-model="user.pop.password"
+                   type="password" name="focus"
+                   placeholder="Enter Password"
+                   required/>
+            <span class="error"
+                  ng-show="socialSignup.passwordPop.$touched &&
+                  socialSignup.passwordPop.$invalid">Password is required.</span>
+        </div>
+        <div class="form-group">
+            <input class="form-control"
+                   id="password_rep"
+                   name="passwordRep"
+                   ng-model="repeat"
+                   type="password" name="focus"
+                   placeholder="Re-enter Password"
+                   compare-to="user.pop.password"
+                   required/>
+            <span class="error"
+                  ng-show="socialSignup.passwordPop.$touched &&
+                  socialSignup.passwordRep.$invalid">Passwords must match.</span>
+        </div>
+        <div class="form-group">
+            <a href="/project/auth/google"
+               ng-disabled="socialSignup.$invalid"
+               class="btn btn-danger btn-block">
+                <span class="fa fa-google-plus"> Sign up with Google</span>
+            </a>
+
+            <a href="/project/auth/flickr/username/{{user.pop.username}}/password/{{user.pop.password}}"
+               class="btn btn-purple btn-block"
+               ng-disabled="socialSignup.$invalid">
+                <span class="fa fa-flickr"> Sign up with Flickr</span>
+            </a>
+            <a href="/project/auth/facebook"
+               class="btn btn-primary btn-block"
+               ng-disabled="socialSignup.$invalid">
+                <span class="fa fa-facebook-square"> Sign up with Facebook</span>
+            </a>
+        </div>
+    </form>
+</div>

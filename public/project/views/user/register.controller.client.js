@@ -10,83 +10,251 @@
         vm.previous = previous;
         vm.changeState = vm.changeState;
         vm.smoothScroll = smoothScroll;
-        vm.setScroll=setScroll;
+        vm.setScroll = setScroll;
         vm.index = 0;
-        vm.forms = ['#myname', '#userName', '#gender', '#country'];
+        vm.forms = ['#signup', '#myname', '#userName', '#password','#email', '#gender', '#country'];
+
+        vm.show = false;
+
+        vm.choose = choose;
 
 
-
-
-        vm.selectedItem  = null;
-        vm.searchText    = null;
-        vm.querySearch   = querySearch;
+        vm.selectedItem = null;
+        vm.searchText = null;
+        vm.querySearch = querySearch;
         vm.countries = [];
         var file = 'data/countries.json';
         vm.contains = contains;
         vm.preload = preload;
         vm.search = search;
+        vm.changeMe = changeMe;
+        vm.submitUser = submitUser;
 
 
-      //  vm.setValue = setValue;
+
+
+        function submitUser(){
+            console.log(vm.user);
+           // console.log(user);
+           // console.log($scope.user);
+            $http.post('/project/register', vm.user);
+        }
 
 
 
-        function preload(file){
+
+
+
+
+        function choose(country){
+            //alert(country);
+            vm.user.country = country;
+            $("#navcontainer").hide();
+        }
+
+
+        function changeMe(){
+            alert("changed");
+        }
+
+
+
+
+        vm.firstjump = firstjump;
+        vm.social = social;
+
+        
+        function  firstjump() {
+            setScroll('#myname',1,focusFname);
+        }
+        
+        //  vm.setValue = setValue;
+
+        // hide from dom so will not show while tabbing
+        $("#dialog").hide();
+
+        function social() {
+            vm.show = true;
+            //$(function () {
+            $("#dialog").dialog({modal: true, draggable: false, resizable: false, dialogClass: "social"});
+
+            $('.ui-widget-overlay').bind('click',function(){
+               // vm.show = !vm.show;
+                $('#dialog').dialog('close');
+                //$('#dialog').dialog('close').empty()
+                //alert(vm.show);
+                vm.show = false;
+            })
+            
+        }
+
+
+
+        function  focusFname(){
+            $('#firstName').focus();
+        }
+
+        function focusUser(){
+            $('#user').focus();
+        }
+
+
+
+        /*
+
+        $('html').keydown(function(e) {
+            var code = e.keyCode || e.which;
+            if (code === 9) {
+               // e.preventDefault();
+               // setScroll("#myname", 1, focusFname);
+                console.log($(':focus').attr('id'));
+            }
+        });*/
+
+
+        
+
+
+
+
+
+        $('#female,#male,#transgender,#other').keydown(function(e) {
+            var code = e.keyCode || e.which;
+            if (code === 9) {
+                 e.preventDefault();
+                 setScroll("#country", 6, focusCountry);
+               // console.log($(':focus').attr('id'));
+            }
+        });
+
+        function focusCountry(){
+            $('#countryInput').focus();
+            //countryInput
+        }
+
+
+        $('#hidden').keydown(function(e) {
+            var code = e.keyCode || e.which;
+            if (code === 9) {
+                e.preventDefault();
+                setScroll("#myname", 1, focusFname);
+            }
+        });
+
+
+
+        $('input[name=lastName]').keydown(function(e) {
+            var code = e.keyCode || e.which;
+            if (code === 9 || code === 13) {
+                e.preventDefault();
+                setScroll("#userName", 2,focusUser);
+            }
+        });
+
+
+        $('#user').keydown(function(e) {
+            var code = e.keyCode || e.which;
+            if (code === 9 || code === 13) {
+                e.preventDefault();
+                setScroll("#password", 3, passwordIn);
+            }
+        });
+
+
+        function focusThis(id){
+            $(id).focus();
+        }
+
+
+        $('#passwordRep').keydown(function(e) {
+            var code = e.keyCode || e.which;
+            if (code === 9 || code === 13) {
+                e.preventDefault();
+                setScroll("#email", 4, focusEmail);
+            }
+        });
+
+
+
+        $('#emailInput').keydown(function(e) {
+            var code = e.keyCode || e.which;
+            if (code === 9 || code === 13) {
+                e.preventDefault();
+                setScroll("#gender", 5, focusFemale);
+            }
+        });
+
+
+
+        function focusEmail(){
+            $('#emailInput').focus();
+        }
+
+
+         function passwordIn(){
+             $('#thepassword').focus();
+         }
+
+        function focusFemale(){
+            $('#female').focus();
+        }
+
+
+        function preload(file) {
             $http.get(file)
-                .then(function(res){
+                .then(function (res) {
                     vm.countries = res.data;
-                    console.log(vm.countries);
+                    //console.log(vm.countries);
                 });
         }
+
         preload(file);
 
 
-        function changeState(id, state){
-            $(id).prop("disabled",state);
+        function changeState(id, state) {
+            $(id).prop("disabled", state);
         }
 
 
-        function setScroll(id, index) {
+        function setScroll(id, index, callback) {
             vm.index = index;
-            if(index === 0){
+            if (index === 0) {
                 changeState("#up", true);
                 changeState("#down", false);
-            }else if(index === 3){
+            } else if (index === vm.forms.length) {
                 changeState("#down", true);
                 changeState("#up", false);
-            }else{
+            } else {
                 changeState("#down", false);
                 changeState("#up", false);
             }
-            smoothScroll(id);
+            smoothScroll(id, callback);
         }
 
-        function  previous() {
-            if(vm.index > 0){
+        function previous() {
+            if (vm.index > 0) {
                 vm.index--;
-               $("#down").prop("disabled",false);
+              $("#down").prop("disabled", false);
                 smoothScroll(vm.forms[vm.index]);
             }
-            if(vm.index == 0){
-                $("#up").prop("disabled", true);
+            if (vm.index == 0) {
+               $("#up").prop("disabled", true);
             }
             return;
         }
 
 
         function next() {
-            if(vm.index < vm.forms.length - 1){
-                 vm.index++;
+            if (vm.index < vm.forms.length - 1) {
+                vm.index++;
                 $("#up").prop("disabled", false);
-               smoothScroll(vm.forms[vm.index]);
+                smoothScroll(vm.forms[vm.index]);
             }
-            if(vm.index == vm.forms.length -1) {
-                $("#down").prop("disabled",true);
+            if (vm.index == vm.forms.length - 1) {
+                $("#down").prop("disabled", true);
             }
             return;
         }
-
-
 
 
         function jumpTo(id) {
@@ -99,14 +267,22 @@
         };
 
 
-        function smoothScroll(id) {
-            var offset =  $(id).offset().top;
+        function smoothScroll(id, callback) {
+            var offset = $(id).offset().top;
+
+            /*
+            $('html, body').animate({
+                scrollTop: offset
+            }, {
+                duration:500,
+            complete:callback});*/
+
 
             $('html, body').animate({
                 scrollTop: offset
-            }, 1000);
+            }, 500).promise().done(setTimeout(callback,500));
 
-          //  return $location.hash = old;
+            //  return $location.hash = old;
         };
 
 
@@ -114,11 +290,10 @@
         }
 
 
-
-        function search(query){
+        function search(query) {
             var result = [];
-            vm.countries.forEach(function(item){
-                if(contains(item.name, query)){
+            vm.countries.forEach(function (item) {
+                if (contains(item.name, query)) {
                     //console.log(item.name);
                     result.push({
                         value: item.code,
@@ -131,15 +306,14 @@
         }
 
 
-        function contains(str1, str2){
+        function contains(str1, str2) {
             str1 = str1.toLowerCase();
             str2 = str2.toLowerCase();
             return (str1.indexOf(str2) != -1);
         }
 
 
-
-        function querySearch (query) {
+        function querySearch(query) {
             return search(query);
         }
 
@@ -147,76 +321,9 @@
             load(query);
         }
 
-        $( "#countryInput" ).focus(function() {
+        $("#countryInput").focus(function () {
             $('#navcontainer').show();
         });
-
-        $('#uItem li').click(function() {
-            alert(this.id); // id of clicked li by directly accessing DOMElement property
-            alert($(this).attr('id')); // jQuery's .attr() method, same but more verbose
-            alert($(this).attr('value'));
-            alert($(this).html()); // gets innerHTML of clicked li
-            alert($(this).text()); // gets text contents of clicked li
-        });
-
-
+        
     }
 })();
-
-/*
- $(function() {
- $('a[href*="#"]:not([href="#"])').click(function() {
- if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname) {
- var target = $(this.hash);
- target = target.length ? target : $('[name=' + this.hash.slice(1) +']');
- if (target.length) {
- $('html, body').animate({
- scrollTop: target.offset().top
- }, 1000);
- return false;
- }
- }
- });
- });
- */
-
-
-
-/*(function(){
- angular
- .module("WebAppMaker")
- .controller("RegisterController", RegisterController);
-
- function RegisterController($location, UserService) {
- var vm = this;
- vm.createUser = createUser;
- vm.submitForm = submitForm;
- vm.close = close;
- //vm.user.dateOfBirth = new Date();
-
- function close() {
- vm.success = false;
- }
-
-
- function submitForm(isValid) {
- if (isValid) {
- createUser();
- }
-
- };
-
-
- function createUser() {
- if(UserService.findUserByUsername(vm.user.username)) {
- vm.success = true;
- vm.error = "Could Not Create User";
- }else{
- var user =  UserService.createUser(vm.user);
- $location.url("/user/" + user._id + "/website/");
- }
- }
- }
-
-
- })();*/

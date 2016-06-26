@@ -1,20 +1,14 @@
-module.exports = function(){
+module.exports = function () {
 
     var mongoose = require('mongoose');
     dbURI = 'mongodb://localhost/summer';
     mongoose.connect(dbURI);
-   // var userModel = require("./user/user.model.server.js")();
-   // var websiteModel = require("./website/website.model.server")();
-  //  var pageModel = require("./page/page.model.server")();
-   // var widgetModel = require("./widget/widget.model.server")();
 
-   // console.log("HEY");
-
-    var models  = {
-    //s    userModel: require("./user/user.model.server.js")(),
-      //  websiteModel: require("./website/website.model.server.js")(),
-      //  pageModel: require("./page/page.model.server")(),
-      //  widgetModel: require("./widget/widget.model.server")()
+    var models = {
+        userModel: require("./user/user.model.server.js")(),
+        mediaModel: require("./media/media.model.server")(),
+        commentModel: require("./comment/comment.model.server")(),
+        placeModel: require("./place/place.model.server")()
     };
 
 

@@ -1,45 +1,39 @@
-<div class="container">
-    <div class="alert  alert-danger alert-dismissible"
-         ng-if="model.error"
-         role="alert">
-        <button ng-click="model.close()"
-                type="button"
-                class="close"
-                data-dismiss="alert"
-                aria-label="Close">
-            <span aria-hidden="true">&times;</span></button>
-        {{model.error}}
+<form name="loginForm" novalidate>
+    <div class="container-flex" id="login">
+        <div class="form-group">
+            <input ng-model="login.username"
+                   name="login.username"
+                   type="text"
+                   class="form-control"
+                   placeholder="username" required/>
+            <span class="error" ng-show="loginForm.login.username.$touched && socialSignup.login.username.$error.required">Username is required.</span>
+        </div>
+        <div class="form-group">
+            <input ng-model="login.password"
+                   name="login.password"
+                   type="password"
+                   class="form-control"
+                   placeholder="password" required/>
+            <span class="error" ng-show="loginForm.login.password.$touched && socialSignup.login.password.$error.required">Password is required.</span>
+        </div>
+
+        <a id="loginBut" class="btn btn-primary btn-block"
+           ng-click="model.login(username, password)"  ng-disabled="loginForm.$invalid">Login</a>
+        <a id="loginRegister" class="btn btn-success btn-block"
+           href="#/register">Register</a>
+
+        <a href="/project/auth/google" class="btn btn-danger btn-block">
+            <span class="fa fa-google-plus"> Sign in with Google</span>
+        </a>
+
+
+        <a href="/project/auth/flickr" class="btn btn-purple btn-block">
+            <span class="fa fa-flickr"> Sign in with Flickr</span>
+        </a>
+
+        <a href="/project/auth/facebook" class="btn btn-primary btn-block">
+            <span class="fa fa-facebook-square"> Sign in with Facebook</span>
+        </a>
+
     </div>
-    <h1>Login</h1>
-    <div class="form-group">
-        <input ng-model="username"
-               type="text"
-               class="form-control"
-               placeholder="username"/>
-    </div>
-    <div class="form-group">
-        <input ng-model="password"
-               type="password"
-               class="form-control"
-               placeholder="password"/>
-    </div>
-    <a class="btn btn-primary btn-block"
-       ng-click="model.login(username, password)">Login</a>
-    <a class="btn btn-success btn-block"
-       href="#/register">Register</a>
-
-    <a href="auth/google" class="btn btn-primary btn-block">
-        <span class="fa fa-google-plus"> Google Login</span>
-    </a>
-
-
-    <a href="auth/flickr" class="btn btn-primary btn-block">
-        <span class="fa fa-flickr"> Flickr Login</span>
-    </a>
-
-    <a href="auth/facebook" class="btn btn-primary btn-block">
-        <span class="fa fa-facebook"> Facebook Login</span>
-    </a>
-
-</div>
-</div>
+</form>

@@ -70,6 +70,12 @@ nav ul {
 }
 
 
+.blackfrost{
+    background: linear-gradient(to left bottom, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.8));
+    border: none;
+}
+
+
 
 .whitefrost{
     background: linear-gradient(to left bottom, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.8));
@@ -212,6 +218,33 @@ span.deleteicon input {
 }
 
 
+.pill-right-div{
+    position: relative;
+    height: 3em;
+    width: 7%;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-left: 0px;
+    outline: 0;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+    display: inline-block;
+    margin-left: 0px;
+    padding-left: 0px;
+}
+
+
+
+.input-nowidth{
+    width: 90%;
+    border: 0px;
+    border-right: 0px;
+    outline: 0;
+    padding-right: 0px;
+    margin-right: 0px;
+}
+
+
 .search-box:invalid ~ .submit:after {
     content:"\f11c";
     font-family: FontAwesome;
@@ -228,9 +261,17 @@ span.deleteicon input {
 }
 
 
+.keyboard{
+    text-align: center;
+    font-size: 3em;
+    float: right;
+    padding-right: 0.5em;
+}
 
-
-
+.iblock
+{
+   display: inline-block;
+}
 
 .search-box:focus {
 }
@@ -380,6 +421,12 @@ a[ id= "contacto" ]:target ~ #main article.panel {
 
 .background2 {
     background: url("../backgrounds/g4.jpg") no-repeat center center scroll;
+    background-size: cover;
+
+}
+
+.backgroundhome{
+    background: url("http://kingofwallpapers.com/tibet/tibet-002.jpg"), no-repeat center center scroll;
     background-size: cover;
 
 }
@@ -576,14 +623,41 @@ input[type=text]#countryInput:focus {
     color: #e7e7e7;
 }
 
+
+.navbarbottom{
+    position: fixed;
+    bottom:0;
+    min-height: 50px;
+}
+
+.usersubmit{
+    margin-bottom: 10px;
+    margin-right: auto;
+    margin-left:  auto;
+    background-color: lightskyblue;
+ }
+
+.usersubmit:hover{
+    background-color: #0b97c4;
+}
+
+
+.centeruser{
+    display:flex;
+    align-items: center;
+}
+
+
 .navbut{
     background-color: lightskyblue;
     border: 2px;
     border-color: #0b97c4;
-    height: 3em;
-    width: 3em;
+    height: 2.5em;
+    width: 2.5em;
     float: right;
-    margin: 0.3em;
+    margin-right: 0.3em;
+    margin-bottom: 0.3em;
+
 }
 
 .navbut:hover{
@@ -601,3 +675,383 @@ input[type=text]#countryInput:focus {
     overflow: -moz-scrollbars-none;
     -webkit-overflow-scrolling: touch;
     -ms-overflow-style: -ms-autohiding-scrollbar; }
+
+.btn-purple {
+    color: #ffffff;
+    background-color: #871BBD;
+    border-color: #470269;
+}
+
+.btn-purple:hover,
+.btn-purple:focus,
+.btn-purple:active,
+.btn-purple.active,
+.open .dropdown-toggle.btn-purple {
+    color: #ffffff;
+    background-color: #49247A;
+    border-color: #470269;
+}
+
+.btn-purple:active,
+.btn-purple.active,
+.open .dropdown-toggle.btn-purple {
+    background-image: none;
+}
+
+.btn-purple.disabled,
+.btn-purple[disabled],
+fieldset[disabled] .btn-purple,
+.btn-purple.disabled:hover,
+.btn-purple[disabled]:hover,
+fieldset[disabled] .btn-purple:hover,
+.btn-purple.disabled:focus,
+.btn-purple[disabled]:focus,
+fieldset[disabled] .btn-purple:focus,
+.btn-purple.disabled:active,
+.btn-purple[disabled]:active,
+fieldset[disabled] .btn-purple:active,
+.btn-purple.disabled.active,
+.btn-purple[disabled].active,
+fieldset[disabled] .btn-purple.active {
+    background-color: #871BBD;
+    border-color: #470269;
+}
+
+.btn-purple .badge {
+    color: #871BBD;
+    background-color: #ffffff;
+}
+
+
+#overlay {
+    display:none; /*hidden on pageload*/
+    position:fixed; /*this will disable it from scrolling*/
+    width:100%; /*this will give the full width*/
+    height:100%; /*this will give the full height*/
+    z-index:999; /*this will keep it above all elements in the page*/
+    left:0; /*this will align it to the left*/
+    top:0; /*this will align it to the top*/
+    background:#000; /*this will give it a black background*/
+}
+
+
+
+
+
+.social{
+    background-color: white;
+}
+
+.ui-dialog{
+    background-color: white;
+}
+
+
+.social .ui-widget-content {
+    background-color: #FFFFFF
+}
+
+.ui-widget-header {
+    background: white;
+    border: 0;
+    border-radius: 0;
+    margin: 0;
+    padding: 0;
+}
+
+.ui-corner-all{
+    margin: 0;
+    padding: 0;
+    -webkit-box-shadow: 2px 2px 10px 0px rgba(0, 0, 0, 0.63);
+    -moz-box-shadow: 2px 2px 10px 0px rgba(0, 0, 0, 0.63);
+    box-shadow: 2px 2px 10px 0px rgba(0, 0, 0, 0.63);
+}
+
+.ui-dialog-titlebar-close{
+    background-color: white;
+    display: none;
+}
+
+.error{
+    color:darkred;
+    font-size: 0.7em;
+}
+
+.errorLarge{
+    color:lightcyan;;
+    font-size: 2em;
+}
+
+.bg-white{
+    background-color: white;
+}
+
+
+.check:hover{
+    text-decoration: none;
+}
+
+.check{
+    text-decoration: none;
+    float:right;
+    padding-right: 0.5em;
+}
+
+
+.red{
+    color: white;
+    background-color: darkred;
+}
+
+/* base CSS element */
+.tip {
+    color: white;
+    background: darkred;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    position: relative;
+    width: 200px;
+    top: 20px;
+    z-index: 100;
+}
+
+.tip:after, .tip:before {
+    bottom: 100%;
+    left: 50%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+}
+
+.tip:after {
+    border-color: rgba(136, 183, 213, 0);
+    border-bottom-color: darkred;
+    border-width: 5px;
+    margin-left: -60px;
+}
+.tip:before {
+    border-color: rgba(194, 225, 245, 0);
+    border-bottom-color: darkred;
+    border-width: 11px;
+    margin-left: -66px;
+}
+
+.noline{
+    text-decoration: none;
+}
+
+.noline:hover{
+    text-decoration: none;
+}
+
+.fixed-topnav-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #00a087;
+    text-align:center;
+}
+
+.element {
+    position: relative;
+}
+
+.parent-element {
+    -webkit-transform-style: preserve-3d;
+    -moz-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+}
+
+.ac {
+    position: relative;
+    margin: auto;
+    top: 50%; left: 0; bottom: 0; right: 0;
+}
+
+.valign {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    /* vendor prefixes omitted due to brevity */
+}
+
+.child {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.block:before {
+    content: '';
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+    margin-right: -0.25em; /* Adjusts for spacing */
+}
+
+#media-car .item img{
+        display: block;
+        width: 100%;
+        height: auto;
+    }
+
+
+.iframefix-right {
+    position:absolute;
+    top:0;
+    left:0;
+    width:20%;
+    height:100%;
+    z-index: 9999;
+    background-color: rgba(0,0,0,0.0);
+    /*background:rgba(255,255,255,0.8); or just this*/
+}
+
+.iframefix-left {
+    position:absolute;
+    top:0;
+    left:80%;
+    width:20%;
+    height:100%;
+    z-index: 9999;
+    background-color: rgba(0,0,0,0.0);
+    /*background:rgba(255,255,255,0.8); or just this*/
+}
+
+
+
+
+
+.black{
+    background-color: black;
+}
+
+
+IMG.displayed {
+    display: block;
+    margin-left: auto;
+    margin-right: auto }
+
+
+
+.videoWrapper {
+    position: relative;
+    padding-bottom: 56.25%; /* 16:9 */
+    padding-top: 25px;
+    height: 0;
+}
+.ivideo {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.video-container {
+    position:relative;
+    padding-bottom:56.25%;
+    padding-top:30px;
+    height:0;
+    overflow:hidden;
+    float: left;
+    padding-bottom: 56.25%;
+    position: relative;
+    display: block;
+    height: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+.video-container iframe, .video-container object, .video-container embed {
+    position:absolute;
+    top:0;
+    left:0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+
+
+
+.embed-video {
+    position: relative;
+    display: block;
+    height: 0;
+    padding: 0;
+    overflow: hidden;
+    float: left;
+}
+.embed-video .embed-video-item,
+.embed-video iframe,
+.embed-video embed,
+.embed-video object,
+.embed-video video {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    border: 0;
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+.embed-video-16by9 {
+    padding-bottom: 56.25%;
+}
+.embed-video-4by3 {
+    padding-bottom: 75%;
+}
+
+
+
+.embed-container {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+    overflow: hidden;
+    max-width: 100%; float: left; display: inline-block;}
+
+.embed-container iframe,
+.embed-container object,
+.embed-container embed
+{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.owl-carousel .owl-video-wrapper {
+    position: relative;
+    height: 100%;
+    background: #000;
+}
+
+.uploadta {
+    resize: none;
+}
+
+.upload-form{
+    width: auto;
+    padding: 20px;
+    display: inline-block;
+}
+
+.upload-photo{
+    max-width: 40%;
+    height: auto;
+    display: inline-block;
+    white-space:nowrap;
+}
+.containThis{
+    overflow:hidden;
+    display: inline;
+}

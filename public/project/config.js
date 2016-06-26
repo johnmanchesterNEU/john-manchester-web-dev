@@ -11,9 +11,15 @@
 
         $routeProvider
             .when("/", {
-                templateUrl: "views/user/register.view.client.html",
-                controller: "RegisterController",
-                title: "Register",
+                templateUrl: "views/home/home.view.client.html",
+                controller: "HomeController",
+                title: "Home",
+                controllerAs: "model"
+            })
+            .when("/home", {
+                templateUrl: "views/home/home.view.client.html",
+                controller: "HomeController",
+                title: "Home",
                 controllerAs: "model"
             })
             .when("/register", {
@@ -40,6 +46,19 @@
                 title: "Login",
                 controllerAs: "model"
             })
+            .when("/photoupload",{
+                templateUrl: "views/photo/photoupload.view.client.html",
+                controller: "PhotoUploadController",
+                title: "Login",
+                controllerAs: "model"
+            })
+            .when("/profile",{
+                templateUrl: "views/user/profile.view.client.html",
+                controller: "ProfileController",
+                title: "Login",
+                controllerAs: "model"
+            })
+            
             .when("/horiz",{
                 templateUrl: "views/user/horiz.html",
                 title: "Login",

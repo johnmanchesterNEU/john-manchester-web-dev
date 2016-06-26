@@ -4,8 +4,10 @@
   "description": "Web Dev at Northeastern University",
   "main": "server.js",
   "dependencies": {
+    "angular-file-upload": "^2.3.4",
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.15.1",
+    "connect-flash": "^0.1.1",
     "cookie-parser": "^1.4.3",
     "express": "^4.13.4",
     "express-session": "^1.13.0",
@@ -14,6 +16,7 @@
     "mongoose": "^4.4.20",
     "multer": "^1.1.0",
     "ng-pattern-restrict": "^0.2.1",
+    "ng-repeat-owl-carousel": "0.0.2",
     "passport": "^0.3.2",
     "passport-facebook": "^2.1.1",
     "passport-flickr": "^0.2.0",
@@ -22,9 +25,20 @@
     "passport-google-oauth2": "^0.1.6",
     "passport-google-oauth20": "^1.0.0",
     "passport-local": "^1.0.0",
-    "pug": "^2.0.0-alpha8"
+    "pug": "^2.0.0-alpha8",
+    "videogular": "^1.4.4",
+    "videogular-angulartics": "^1.4.4",
+    "videogular-buffering": "^1.4.4",
+    "videogular-controls": "^1.4.4",
+    "videogular-dash": "^1.4.4",
+    "videogular-ima-ads": "^1.4.4",
+    "videogular-overlay-play": "^1.4.4",
+    "videogular-poster": "^1.4.4",
+    "videogular-themes-default": "^1.4.4"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "video.js": "^5.10.4"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"

@@ -1,0 +1,57 @@
+    <div class="fileUpload btn btn-primary">
+        <span>Upload</span>
+        <!-- prevent unsupported flickr filetypes from being uploaded-->
+        <input onchange="angular.element(this).scope().uploadedFile(this)"
+               id="upload" type="file" class="upload" multiple
+               accept="image/*, video/mp4, video/quicktime, video/MP2T, video/3gpp"/>
+    </div>
+
+
+        <div id="files" ng-repeat="media in model.files">
+            <div class="containThis">
+                <div class="form-group upload-form">
+                    <div style="width: 100%">
+                        <div class="form-group">
+                        {{media.name}}  {{media.type}}   {{media.index}}   {{$index}}
+                            <span style="float: right">
+                            <button class="btn btn-danger"
+                                    ng-click="model.remove($index)">Delete</button>
+                            </span>
+                        </div>
+                        <label for="title">Title</label>
+                        <input class="form-control"
+                               ng-model="model.photo.title"
+                               id="title"
+                               placeholder="Title"/>
+                        <label for="description">Description</label>
+                        <input class="form-control"
+                               ng-model="model.photo.description"
+                               id="description"
+                               placeholder="Description"/>
+                        <label for="comments">Comments</label>
+                        <textarea rows="5"
+                                  class="form-control uploadta"
+                                  no-resize
+                                  id="comments"
+                                  placeholder="Describe your story..."></textarea>
+                    </div>
+                </div>
+            </div>
+            <div id="filePreview" class="upload-photo">
+                <ng-switch on="media.type">
+                    <div ng-switch-when="video/mp4" style="display: none"></div>
+                    <div ng-switch-when="video/quicktime" style="display: none">No preview</div>
+                    <div ng-switch-when="video/MP2T" style="display: none">No preview</div>
+                    <div ng-switch-when="video/3gpp" style="display: none">No preview</div>
+                    <img ng-switch-default ng-file-select="" obj="media" src="/load/load.gif"
+                         style=" max-width: 100%; height: auto">
+                </ng-switch>
+            </div>
+        </div>
+
+
+<div>
+    <button ng-disabled="(model.files.length == 0)" class="btn btn-primary" ng-click="model.upload()">Upload</button>
+</div>
+
+
