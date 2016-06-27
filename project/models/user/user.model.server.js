@@ -25,7 +25,9 @@ module.exports = function () {
         findById: findById,
         findFacebookUser:findFacebookUser,
         register:register,
-        unflickr:unflickr
+        unflickr:unflickr,
+        findByUsername:findByUsername,
+        saveUser:saveUser
 
     }
     return api;
@@ -33,6 +35,9 @@ module.exports = function () {
 
 
 
+    function findByUsername(username){
+        return User.findOne({"local.username": username});
+    }
 
     function unflickr(id) {
         var user = User.findOne({"f_id": id});
@@ -85,15 +90,35 @@ module.exports = function () {
 
 
 
+
+    //create a new User object, pass flickrUser into it and save
+    function saveUser(newUser){
+        var localUser = new User(newUser);
+
+        console.log("database: " + localUser);
+        //return
+        // return
+        localUser.save();
+        return User.findOne({"local.username": flickrUser.local.username});
+        // return User.findOne({"local.username":flick.local.username});
+    }
+
+
+
     //create a new User object, pass flickrUser into it and save
     function saveFlickr(flickrUser){
         var flickr = new User(flickrUser);
 
         console.log("database: " + flickr);
+        console.log(flickrUser.local.username);
+
         //return
        // return
-        flickr.save();
-        return User.findOne({"local.username": flickrUser.local.username});
+        return flickr.save();
+        //return  User.findOne({"local.username":flickr.local.username});
+
+       // console.log("found: " + user.local.username);
+        //return user;
        // return User.findOne({"local.username":flick.local.username});
     }
 

@@ -21,6 +21,21 @@ module.exports = function (app, models) {
     var userModel = models.userModel;
 
 
+    app.delete("/api/user/:userId", deleteUser);
+    // sends a request to delete a user in the database given an ID
+    function deleteUser(req, res) {
+        var userId = req.params.userId;
+        userModel
+            .deleteUser(userId)
+            .then(
+                function (user) {
+                    req.logOut();
+                    res.sendStatus(200);
+                },
+                function (error) {
+                    res.status(error.statusCode).send("Could not delete the user on the server");
+                })
+    }
 
 
 
@@ -48,7 +63,7 @@ module.exports = function (app, models) {
     function updateUser(req, res) {
         var userId = req.params.userId;
         var user = req.body;
-        user.local.password = bcrypt.hashSync(user.password);
+        //user.local.password = bcrypt.hashSync(user.password);
         userModel
             .updateUser(userId, user)
             .then(
@@ -127,7 +142,7 @@ module.exports = function (app, models) {
 
 
 
-        app.get("/api/loggedIn", loggedIn);
+    app.get("/api/loggedIn", loggedIn);
     app.post("/api/logout", logout);
 
 
@@ -137,14 +152,34 @@ module.exports = function (app, models) {
         passReqToCallback : true
     }
 
-// process the signup form
-    app.post('/signup', passport.authenticate('local-signup', {
-        successRedirect : '/profile', // redirect to the secure profile section
-        failureRedirect : '/signup' // redirect back to the signup page if there is an error
+
+    // process the signup form
+    app.post('/pro/signup', passport.authenticate('local-signup', {
+        successRedirect : '/project/#/profile', // redirect to the secure profile section
+        failureRedirect : '/', // redirect back to the signup page if there is an error
     }));
 
 
-  
+    passport.use('local-signup', new LocalStrategy({
+            // by default, local strategy uses username and password, we will override with email
+            usernameField : 'email',
+            passwordField : 'password',
+            passReqToCallback : true // allows us to pass back the entire request to the callback
+        },
+        function(req, email, password, done) {
+            // user model must be in proper format to work
+            console.log("user: " + req.user);
+            userModel
+                .saveUser(req.user)
+                .then(function (user) {
+                    console.log("result: " + user);
+                    return done(null,user);
+                }, function (error) {
+                    // throws error if user already exists
+                    return done(error);
+                })
+        }));
+
 
 
 
@@ -333,15 +368,15 @@ module.exports = function (app, models) {
 
     app.get("/project/auth/flickr/username/:uid/password/:pid", function (req, res, next) {
 
-         console.log(req.params.uid);
-         console.log(req.params.pid);
+        console.log(req.params.uid);
+        console.log(req.params.pid);
 
         var state = {
-           username: req.params.uid,
-           password: req.params.pid
+            username: req.params.uid,
+            password: req.params.pid
         }
 
-       req.session.state = state;
+        req.session.state = state;
         // in Oauth2, its more like : args.scope = reqId, and args as authenticate() second params
         passport.authenticate('flickr')(req, res, next);
     });
@@ -349,9 +384,9 @@ module.exports = function (app, models) {
 
     app.get('/project/auth/flickr/callback/',
         passport.authenticate('flickr', {
-                successRedirect: '/project/#/profile',
-                failureRedirect: '/project/#/login'
-            }));
+            successRedirect: '/project/#/profile',
+            failureRedirect: '/project/#/login'
+        }));
 
     // If we are already logged in and not connected to flickr
     app.get('/project/connect/flickr', passport.authorize('flickr'));
@@ -371,7 +406,6 @@ module.exports = function (app, models) {
 
         var fullName = profile.fullName.split(" ");
         var newUser = {
-            "_id" : null,
             "local": {
                 "username": req.session.state.username,
                 "password": bcrypt.hashSync(req.session.state.password),
@@ -385,6 +419,7 @@ module.exports = function (app, models) {
             }
         };
 
+        
 
         userModel.saveFlickr(newUser).then(
             function (flickrUser) {
@@ -411,10 +446,10 @@ module.exports = function (app, models) {
             .then(
                 function (user) {
                     if (user === null) {
-                       // console.log("unique");
+                        // console.log("unique");
                         return res.send(true);
                     } else {
-                       // console.log("not");
+                        // console.log("not");
                         return res.send(false);
                     }
 
