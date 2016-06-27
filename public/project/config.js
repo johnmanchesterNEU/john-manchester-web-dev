@@ -43,20 +43,39 @@
             .when("/photo",{
                 templateUrl: "views/photo/photo.view.client.html",
                 controller: "PhotoController",
-                title: "Login",
+                title: "Photo",
                 controllerAs: "model"
             })
+            .when("/photoedit",{
+            templateUrl: "views/photo/photo-edit.view.client.html",
+            controller: "PhotoEditController",
+            title: "Photo Edit",
+            controllerAs: "model"
+        })
             .when("/photoupload",{
                 templateUrl: "views/photo/photoupload.view.client.html",
                 controller: "PhotoUploadController",
                 title: "Login",
                 controllerAs: "model"
             })
-            .when("/profile",{
+
+            .when("/profile/", {
+                templateUrl: "views/user/profile.view.client.html",
+                controller: "ProfileController",
+                title: "Profile",
+                controllerAs: "model",
+                resolve: {
+                    loggedin: checkLoggedin
+                }
+            })
+            .when("/profile/:id",{
                 templateUrl: "views/user/profile.view.client.html",
                 controller: "ProfileController",
                 title: "Login",
-                controllerAs: "model"
+                controllerAs: "model",
+                resolve: {
+                    loggedin: checkLoggedin
+                }
             })
             
             .when("/horiz",{
@@ -68,7 +87,41 @@
                 redirectTo: "views/user/register.view.client.html"
             });
 
-       // $locationProvider.html5Mode(true);
+        function checkLoggedin(UserService, $q, $location, $rootScope) {
+            var deferred = $q.defer();
+            UserService
+                .loggedIn()
+                .then(
+                    function(response) {
+                        var user = response.data;
+                        console.log(user);
+                        if(!user) {
+                            console.log(user._id)
+                            deferred.reject();
+                            $rootScope.currentUser = null;
+                            $location.url("/register/")
+                        } else {
+                            deferred.resolve();
+                            $rootScope.currentUser = user;
+                            //console.log("eee " + response.data)
+                            //res.render();
+                            console.log(user.local.username);
+                            $location.url("/profile/" + user._id);
+
+                        }
+                    },
+                    function(err) {
+                        console.log(err);
+                        $rootScope.currentUser = null;
+                        deferred.reject();
+                    }
+                );
+
+            return deferred.promise;
+        }
+
+
+        // $locationProvider.html5Mode(true);
        // $locationProvider.hashPrefix('!');
     }
 })();

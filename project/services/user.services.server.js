@@ -21,6 +21,116 @@ module.exports = function (app, models) {
     var userModel = models.userModel;
 
 
+
+
+
+    app.put("/pro/flickr/:userId", updateUser);
+    //Sends a request to update the user at the database
+    function updateUser(req, res) {
+        var userId = req.params.userId;
+        var user = req.body;
+        // user.password = bcrypt.hashSync(user.password);
+        userModel
+            .updateUser(userId, user)
+            .then(
+                function (user) {
+                    console.log(user);
+                    res.json(user);
+                },
+                function (error) {
+                    res.status(error.statusCode).send("Could update the user on the server.");
+                })
+    }
+
+
+    app.put("/pro/user/:userId", updateUser);
+    //Sends a request to update the user at the database
+    function updateUser(req, res) {
+        var userId = req.params.userId;
+        var user = req.body;
+        user.local.password = bcrypt.hashSync(user.password);
+        userModel
+            .updateUser(userId, user)
+            .then(
+                function (user) {
+                    console.log(user);
+                    res.json(user);
+                },
+                function (error) {
+                    res.status(error.statusCode).send("Could update the user on the server.");
+                })
+    }
+
+
+
+
+
+
+    //unlink flickr account
+    app.get("/pro/unflickr/:id", unflickr);
+    function unflickr(req,res) {
+        var userId = req.params.id;
+
+        userModel
+            .unflickr(userId)
+            .then(function (user) {
+                res.status(200).send("Flickr was unlinked");
+            }, function (error) {
+                res.status(400).send("Could not unlink Flickr account");
+            })
+    }
+
+
+
+    //unregrister
+
+    app.get("/pro/unregister/:id", unregister);
+
+    function unregister(req, res) {
+        var userId = req.params.id;
+        userModel
+            .deleteUser(userId)
+            .then(function (user) {
+                res.status(200).send("User was unregistered");
+            }, function (error) {
+                res.status(400).send("Could not unregister");
+            })
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+    app.get("/api/user/:userId", findUserById);
+    function findUserById(req, res) {
+        var userId = req.params.userId;
+        // console.log(req.session.currentUser);
+        //console.log(newUser);
+        userModel
+            .findUserById(userId)
+            .then(
+                function (user) {
+                    res.json(user);
+                },
+                function (error) {
+                    res.status(400).send("Could not find user on server");
+                })}
+
+
+
+
+
+        app.get("/api/loggedIn", loggedIn);
+    app.post("/api/logout", logout);
+
+
     var localConfig = {
         userNameField : 'username',
         passwordField : 'password',
@@ -223,27 +333,25 @@ module.exports = function (app, models) {
 
     app.get("/project/auth/flickr/username/:uid/password/:pid", function (req, res, next) {
 
-        // console.log(req.params.uid);
-        // console.log(req.params.pid);
+         console.log(req.params.uid);
+         console.log(req.params.pid);
 
         var state = {
-            username: req.params.uid,
-            password: req.params.pid
+           username: req.params.uid,
+           password: req.params.pid
         }
 
-        req.session.state = state;
+       req.session.state = state;
         // in Oauth2, its more like : args.scope = reqId, and args as authenticate() second params
         passport.authenticate('flickr')(req, res, next);
-    }, function () {
     });
 
 
     app.get('/project/auth/flickr/callback/',
         passport.authenticate('flickr', {
-            successRedirect: '/project/#/profile',
-            failureRedirect: '/project/#/login'
-        }));
-
+                successRedirect: '/project/#/profile',
+                failureRedirect: '/project/#/login'
+            }));
 
     // If we are already logged in and not connected to flickr
     app.get('/project/connect/flickr', passport.authorize('flickr'));
@@ -263,6 +371,7 @@ module.exports = function (app, models) {
 
         var fullName = profile.fullName.split(" ");
         var newUser = {
+            "_id" : null,
             "local": {
                 "username": req.session.state.username,
                 "password": bcrypt.hashSync(req.session.state.password),
@@ -302,10 +411,10 @@ module.exports = function (app, models) {
             .then(
                 function (user) {
                     if (user === null) {
-                        console.log("unique");
+                       // console.log("unique");
                         return res.send(true);
                     } else {
-                        console.log("not");
+                       // console.log("not");
                         return res.send(false);
                     }
 
@@ -321,26 +430,6 @@ module.exports = function (app, models) {
     }
 
 
-    function serializeUser(user, done) {
-        console.log("serialize: " + user);
-        done(null, user);
-    }
-
-    function deserializeUser(user, done) {
-        console.log("deserialize: " + user);
-        userModel
-            .findUserById(user._id)
-            .then(
-                function (user) {
-                    done(null, user);
-                },
-                function (err) {
-                    done(err, null);
-                }
-            );
-    }
-
-
     function authenticate(req, res, next) {
         console.log(req.user);
         console.log(req.isAuthenticated());
@@ -353,18 +442,30 @@ module.exports = function (app, models) {
 
 
 
-    function logout(req, res) {
-        req.logout();
-        res.send(200);
-    }
-
-    function loggedin(req, res) {
+    function loggedIn(req, res) {
+        console.log("here " + req);
         if(req.isAuthenticated()) {
             res.json(req.user);
         } else {
-            res.send('0');
+            res.send(false);
         }
     }
+
+
+    function logout(req, res) {
+        req.logOut();
+        res.sendStatus(200);
+    }
+
+
+
+    passport.serializeUser(function(user, done) {
+        done(null, user);
+    });
+
+    passport.deserializeUser(function(user, done) {
+        done(null, user);
+    });
 
 };
 

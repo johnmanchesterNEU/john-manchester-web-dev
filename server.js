@@ -9,14 +9,19 @@ var passport = require('passport');
 var app = express();
 
 var bodyParser = require('body-parser');
+app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use(cookieParser());
 //app.use(session({ secret: "sdfsdfsdf" }));
-
+//console.log(process.env.SECRET);
+app.use(session({ secret: "youshallnotpass",
+    resave: true,
+    saveUninitialized: true}));
 app.use(passport.initialize());
 app.use(passport.session());
+
+
 
 // configure a public directory to host static content
 app.use(express.static(__dirname + '/public'));

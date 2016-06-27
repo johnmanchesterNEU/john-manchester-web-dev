@@ -1,6 +1,6 @@
 (function(){
     angular
-        .module("WebAppMaker")
+        .module("Project")
         .controller("ProfileController", ProfileController);
 
     function ProfileController($location, $routeParams, UserService) {
@@ -10,13 +10,96 @@
         vm.updateUser = updateUser;
         vm.unregister = unregister;
         vm.submitted = false;
+        vm.flickr = false;
 
         var id = $routeParams["id"];
         var index = -1;
 
+        vm.close = close;
+
+        vm.unlink = unlink;
+        vm.refresh = refresh;
+        vm.unregister = unregister;
+        vm.unflickr = unflickr;
+
+        vm.updateUser = updateUser;
+
+
+        //updates all fields except username
+        function updateUser() {
+            console.log("HEY");
+            console.log(vm.user);
+            UserService
+                .updateUser(id, vm.user)
+                .then(
+                    function(response) {
+                        console.log(response);
+                        vm.success = "User successfully updated";
+                    },
+                    function(error) {
+                        vm.error = error.data;
+                    }
+                )
+        }
+
+
+
+
+
+        // unregister flickr
+        function unflickr(){
+            var profile = vm.user;
+
+            profile.flickr = null;
+
+            console.log(profile);
+            UserService
+                .updateFlickr(id, profile)
+                .then(
+                    function(response) {
+                        //console.log("response: " + response.data.user);
+                        //vm.user = response.data.user;
+                        vm.user.flickr = null;
+                        vm.success = "Flickr Unlinked";
+                    },
+                    function(error) {
+                        vm.error = error.data;
+                    }
+                )
+        }
+
+
+
+
+        // unregister user
+        function unregister(){
+            UserService.unregister(id).then(function(success){
+                $location.url("/home/")
+            },function(error){
+                vm.error = error.data;
+            })
+        }
+
+
+
+        //unlick flickr account
+        function unlink(){
+
+        }
+
+
+
+        //refresh flickr token
+        function refresh(){};
+
+
+        function close(){
+            vm.success = false;
+        }
+
 
         function logout(){
-            UserService
+           /* UserService
                 .logout()
                 .then(
                     function(response){
@@ -25,7 +108,7 @@
                     function (err) {
                         $location.url("/login");
                     }
-                )
+                )*/
         }
 
 
@@ -42,7 +125,7 @@
 
         //deletes user from Users
         function unregister() {
-            UserService
+          /*  UserService
                 .deleteUser(id)
                 .then(
                     function(response) {
@@ -51,12 +134,12 @@
                     function(error) {
                         vm.error = error.data;
                     }
-                );
+                );*/
         }
 
         //updates all fields except username
         function updateUser() {
-            UserService
+          /*  UserService
                 .updateUser(id, vm.user)
                 .then(
                     function(response) {
@@ -65,7 +148,7 @@
                     function(error) {
                         vm.error = error.data;
                     }
-                )
+                )*/
         }
     }
 })();

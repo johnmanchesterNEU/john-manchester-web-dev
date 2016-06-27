@@ -315,6 +315,7 @@ module.exports = function (app, models) {
             .findUserById(userId)
             .then(
                 function (user) {
+                    console.log("found user: " + user)
                     res.json(user);
                 },
                 function (error) {

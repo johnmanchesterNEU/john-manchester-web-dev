@@ -24,10 +24,22 @@ module.exports = function () {
         createFlickr: createFlickr,
         findById: findById,
         findFacebookUser:findFacebookUser,
-        register:register
+        register:register,
+        unflickr:unflickr
 
     }
     return api;
+
+
+
+
+
+    function unflickr(id) {
+        var user = User.findOne({"f_id": id});
+        user.flickr = null;
+        return User.update({"_id" : user._id}, user);
+    }
+
 
 
     function register(user){
@@ -77,8 +89,12 @@ module.exports = function () {
     function saveFlickr(flickrUser){
         var flickr = new User(flickrUser);
 
-        console.log(flickr);
-        return flickr.save();
+        console.log("database: " + flickr);
+        //return
+       // return
+        flickr.save();
+        return User.findOne({"local.username": flickrUser.local.username});
+       // return User.findOne({"local.username":flick.local.username});
     }
 
 
@@ -142,8 +158,8 @@ module.exports = function () {
     function  createUser(user) {
        // console.log("at model " + user);
         //user.createUser
-       //return User.create(user);
-        return User.update({"user._id" : user.id}, user, {upsert: true});
+       return User.create(user);
+       // return User.update({"user._id" : user.id}, user, {upsert: true});
     }
 
 
@@ -156,11 +172,7 @@ module.exports = function () {
     function updateUser(userId, user){
         return User
             .update({_id:userId},{
-               // $set: user
-                $set:{
-                    firstName : user.firstName,
-                    lastName: user.lastName
-                }
+                $set: user
             })
     }
 

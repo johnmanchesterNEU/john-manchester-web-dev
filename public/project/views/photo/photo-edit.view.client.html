@@ -1,0 +1,64 @@
+<div ng-repeat="photo in model.photos" ng-switch on="photo.media" style="">
+    <div class="col-sm-4 ui-corner-all photocard" style="height: auto">
+        <div  ng-switch-when="photo">
+        <img class="displayed"
+             src="https://farm{{photo.farm}}.staticflickr.com/{{photo.server}}/{{photo.id}}_{{photo.secret}}_b.jpg" width="300px"/>
+    </div>
+
+    <!-- video play support will not be implemented due to time constraints -->
+    <div ng-switch-when="video">
+        <img class="displayed"
+             src="https://farm{{photo.farm}}.staticflickr.com/{{photo.server}}/{{photo.id}}_{{photo.secret}}_b.jpg" width="300px"/>
+    </div>
+        <div id="menu{{$index}}" class="form-group photoedit black3">
+            <label class="fontwhite" for="title">Title</label><a class="fontwhite fright"><span class="glyphicon glyphicon-ok"></span></a>
+            <input id="title"
+                   value="{{photo.title}}"
+                   class="form-control black3"
+                   type="text"
+                   style="color:white;"/>
+            <label class="fontwhite" for="desc">Description</label>
+            <textarea class="uploadta black3" rows="4" id="desc" class="form-control" type="text"/>
+
+        </div>
+
+        <span class="photomenu">
+        <a class="hand fontwhite"
+           ng-click="model.photoDelete()"><span class="glyphicon glyphicon-trash">Delete</span></a>
+        <a class="hand fontwhite"
+           ng-click="model.photoEdit($index)"><span class="glyphicon glyphicon-edit">Edit</span></a>
+                     <a id="c{{$index}}" style="display: none"
+                        class="hand fontwhite" ng-click="model.close($index)"><span class="glyphicon glyphicon-remove"></span></a>
+             </span>
+
+
+    </div>
+</div>
+
+
+
+
+
+    <!---
+    <div ng-repeat="photo in model.photos" ng-switch on="photo.media" style="">
+
+        <div class="black" ng-switch-when="photo">
+            <img class="displayed"
+                 src="https://farm{{photo.farm}}.staticflickr.com/{{photo.server}}/{{photo.id}}_{{photo.secret}}_b.jpg"/>
+        </div>
+
+
+        -->
+
+        <!-- video play support will not be implemented due to time constraints -->
+       <!---
+        <div class="black" ng-switch-when="video">
+            <img class="displayed"
+                 src="https://farm{{photo.farm}}.staticflickr.com/{{photo.server}}/{{photo.id}}_{{photo.secret}}_b.jpg"/>
+        </div>
+    </div>-->
+
+
+
+
+</div>

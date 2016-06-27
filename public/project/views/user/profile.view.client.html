@@ -1,3 +1,16 @@
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <a class="navbar-brand pull-left">
+            Profile
+        </a>
+        <p class="navbar-text pull-right">
+            <a ng-click="model.updateUser()" class="navbar-link hand">
+                  <span class="glyphicon glyphicon-ok">
+                  </span>
+            </a>
+        </p>
+    </div>
+</nav>
 <div class="container">
     <div class="alert alert-success alert-dismissible"
          ng-if="model.success"
@@ -26,7 +39,7 @@
             <label for="username">
                 Username
             </label>
-            <input ng-model="model.user.username"
+            <input ng-model="model.user.local.username"
                    ng-disabled="true"
                    type="text"
                    class="form-control"
@@ -37,7 +50,7 @@
             <label for="password">
                 Password
             </label>
-            <input ng-model="model.user.password"
+            <input ng-model="model.user.local.password"
                    type="password"
                    class="form-control"
                    id="password"
@@ -57,7 +70,7 @@
             <label for="email">
                 Email address
             </label>
-            <input ng-model="model.user.email"
+            <input ng-model="model.user.local.email"
                    type="email"
                    class="form-control"
                    id="email"
@@ -68,7 +81,7 @@
             <label for="first-name">
                 First Name
             </label>
-            <input ng-model="model.user.firstName"
+            <input ng-model="model.user.local.firstName"
                    type="text"
                    class="form-control"
                    id="first-name"
@@ -79,7 +92,7 @@
             <label for="last-name">
                 Last Name
             </label>
-            <input ng-model="model.user.lastName"
+            <input ng-model="model.user.local.lastName"
                    type="text"
                    class="form-control"
                    id="last-name"
@@ -87,13 +100,25 @@
                    placeholder="Smith"/>
         </div>
     </form>
-    <a class="btn btn-primary btn-block"
-       href="#/user/{{model.user._id}}/website">Websites</a>
     <a class="btn btn-warning btn-block"
        ng-click="model.unregister()">Unregister</a>
     <a class="btn btn-danger  btn-block"
        ng-click="model.logout()">Logout</a>
 </div>
+
+<div class="container" ng-if="model.user.flickr">
+    <p>Flickr Profile</p>
+    <p>{{model.user.flickr.id}}</p>
+    <p>{{model.user.flickr.displayName}}</p>
+    <p>{{model.user.flickr.token}} <a ng-click="model.refresh()" class="navbar-link hand">refresh token</a></p>
+    <p><a ng-click="model.unflickr()"
+          class="navbar-link hand"><i class="fa fa-chain-broken"></i> Account</a></p>
+</div>
+
+
+
+</div>
+
 <nav class="navbar navbar-default navbar-fixed-bottom">
     <div class="container-fluid">
         <a href="#/profile" class="navbar-center pull-right">
