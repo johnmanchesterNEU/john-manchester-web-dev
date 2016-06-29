@@ -27,11 +27,26 @@ module.exports = function () {
         register:register,
         unflickr:unflickr,
         findByUsername:findByUsername,
-        saveUser:saveUser
+        saveUser:saveUser,
+        follow:follow
+
 
     }
     return api;
 
+    function follow(followMe){
+        console.log("db: " + followMe);
+        var follower = followMe.id; // who is doing the following
+        var followee = followMe.follower; // who is being followed
+        // you can not follow yourself
+        if(follower === followee){
+            return null;
+        }
+        //let the user know he is being followed ;)
+        User.findByIdAndUpdate(followee,{$push:{"followedBy":mongoose.Types.ObjectId(follower)}});
+        // follow the user
+        return User.findByIdAndUpdate(follower,{$push:{"follows":mongoose.Types.ObjectId(followee)}});
+    }
 
 
 
@@ -61,7 +76,13 @@ module.exports = function () {
 
 
     function findUserById(userId) {
+        //return User.findById(userId);
         return User.findById(userId);
+    }
+
+
+    function allUsers(){
+            return User.find({});
     }
 
     function findById(user){
@@ -146,12 +167,23 @@ module.exports = function () {
 
 
     function getUsers(){
-        return User.find().pretty();
+      //  var usersProjection = {
+        //    __v: false,
+         //   flickr: false,
+
+        //};
+
+        return User.find({});
+       // console.log("db users");
+        //return {"screw" :"sscrew you"};
+       // var users =
+       // return User.find({"local.username":"john"});
+      //  return users.select('-local.password');
     }
 
 
     function findUserEnc(username, password){
-        var user = User.findOne({"username" : username});
+        var user = User.findOne({"local.username" : username});
         if(comparePassword(password, user.password)){
             return user;
         }else{

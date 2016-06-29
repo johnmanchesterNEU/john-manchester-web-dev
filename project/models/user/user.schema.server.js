@@ -34,9 +34,12 @@ module.exports = function () {
         flickr: {
             id: String,
             token: String,
+            tokenSecret:String,
             displayName: String,
             email: String
         },
+        follows : [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
+        followedBy : [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
         // websites: [{type: mongoose.Schema.Types.ObjectId, ref: 'Website'}],
         dateCreated: {type: Date, default: Date.now()}
     }, {collection: "project.user"});

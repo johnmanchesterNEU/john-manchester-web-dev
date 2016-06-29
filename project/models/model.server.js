@@ -8,7 +8,8 @@ module.exports = function () {
         userModel: require("./user/user.model.server.js")(),
         mediaModel: require("./media/media.model.server")(),
         commentModel: require("./comment/comment.model.server")(),
-        placeModel: require("./place/place.model.server")()
+        placeModel: require("./place/place.model.server")(),
+        tripModel: require("./trip/trip.model.server")()
     };
 
 

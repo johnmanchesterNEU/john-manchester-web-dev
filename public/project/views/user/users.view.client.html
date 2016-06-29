@@ -1,0 +1,13 @@
+<!-- List of users to follow -->
+<div class="container-flex" style="background-color: lightblue; width: 100%;height: 9999px">
+    <div class="row">
+        <div ng-repeat="user in model.users">
+            <div class="col-sm-3" style="background-color: white; padding: 20px; margin: 20px">
+               <p class="row">{{user.local.firstName}} {{user.local.lastName}}</p>
+                <p class="row">{{user.local.username}}</p>
+                <a ng-click="model.follow(user._id)" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> follow</a>
+            </div>
+            </div>
+        </div>
+</div>
+<!--  <div owl-carousel-item="" ng-repeat="photo in model.photos" >

@@ -1,0 +1,29 @@
+URL: https://api.flickr.com/services/rest/?
+method=flickr.photos.delete&
+api_key=5970d11e3dab44314b360e9a2e169970&
+photo_id=27846549436&
+format=json
+&nojsoncallback=1&
+auth_token=72157669749356631-080041fda29c26fb&
+
+
+auth_token72157669749356631-080041fda29c26fb
+
+
+photo_id27846549436
+
+c7d4b19e14debcc7
+
+nojsoncallback1
+
+
+
+api_sig=4fcd3986d2b4f01f3f222de0db77acca
+
+methodflickr.photos.delete
+
+
+key = c778ef301f9d7fd8fb70c5dc8cfe1bf9
+secret = c7d4b19e14debcc7
+
+fbformatjsonmethodflickr.photos.deletenojsoncallback1photo_id27846549436

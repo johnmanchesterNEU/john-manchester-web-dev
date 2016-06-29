@@ -1,5 +1,5 @@
 <form name="upload" action="https://up.flickr.com/services/upload/" method="post" enctype="multipart/form-data">
-<div class="fileUpload">
+    <div class="fileUpload">
         <label class="btn btn-primary ubutton" for="upload">Choose files</label>
         {{model.files.length}} files uploaded
         <!-- prevent unsupported flickr filetypes from being uploaded-->
@@ -9,51 +9,53 @@
                type="file" class="upload" multiple
                accept="image/*, video/mp4, video/quicktime, video/MP2T, video/3gpp"/>
     </div>
-
-    <div>
-        <div id="files" ng-repeat="media in model.files">
-            <div class="containThis">
-                <div id="filePreview" class="upload-photo">
-                    <ng-switch on="media.type">
-                        <div ng-switch-when="video/mp4" style="display: none"></div>
-                        <div ng-switch-when="video/quicktime" style="display: none">No preview</div>
-                        <div ng-switch-when="video/MP2T" style="display: none">No preview</div>
-                        <div ng-switch-when="video/3gpp" style="display: none">No preview</div>
-                        <img ng-switch-default ng-file-select="" obj="media" src="/load/load.gif"
-                             style=" max-width: 100%; height: auto">
-                    </ng-switch>
-                </div>
-                <div class="upload-form">
-                    <div class="form-group">
-                        <span class="fleft">{{media.name}} {{media.type}} {{media.index}} {{$index}}</span>
+    <div class="container-flex">
+        <div class="col-sm-6">
+            <div id="files" ng-repeat="media in model.files">
+                <div class="containThis">
+                    <div id="filePreview" class="upload-photo">
+                        <ng-switch on="media.type">
+                            <div ng-switch-when="video/mp4" style="display: none"></div>
+                            <div ng-switch-when="video/quicktime" style="display: none">No preview</div>
+                            <div ng-switch-when="video/MP2T" style="display: none">No preview</div>
+                            <div ng-switch-when="video/3gpp" style="display: none">No preview</div>
+                            <img ng-switch-default ng-file-select="" obj="media" src="/load/load.gif"
+                                 style=" max-width: 100%; height: auto">
+                        </ng-switch>
+                    </div>
+                    <div class="upload-form">
+                        <div class="form-group">
+                            <span class="fleft">{{media.name}} {{media.type}} {{media.index}} {{$index}}</span>
                             <span class="fright">
                             <button class="btn btn-danger"
                                     ng-click="model.remove($index)">Delete</button>
                             </span></div>
-                    <div class="form-group" style="clear: both">
-                        <label for="title">Title</label>
-                        <input class="form-control"
-                               ng-model="model.photo.title"
-                               id="title"
-                               placeholder="Title"/>
-                        <label for="description">Description</label>
-                        <input class="form-control"
-                               ng-model="model.photo.description"
-                               id="description"
-                               placeholder="Description"/>
-                        <label for="comments">Comments</label>
+                        <div class="form-group" style="clear: both">
+                            <label for="title">Title</label>
+                            <input class="form-control"
+                                   ng-model="model.photo.title"
+                                   id="title"
+                                   placeholder="Title"/>
+                            <label for="description">Description</label>
+                            <input class="form-control"
+                                   ng-model="model.photo.description"
+                                   id="description"
+                                   placeholder="Description"/>
+                            <label for="comments">Comments</label>
                         <textarea rows="5"
                                   class="form-control uploadta"
                                   no-resize
                                   id="comments"
                                   placeholder="Describe your story..."></textarea>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="ubutton">
-            <button ng-disabled="(model.files.length == 0)" type="submit" class="btn btn-primary">Upload
-            </button>
+            <div class="ubutton">
+                <button ng-disabled="(model.files.length == 0)" type="submit" class="btn btn-primary">Upload
+                </button>
+            </div>
         </div>
     </div>
+
 </form>

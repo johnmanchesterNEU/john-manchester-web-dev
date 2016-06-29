@@ -11,10 +11,17 @@
     <!-- Styles-->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
     <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
-    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css"/>
+    <link rel="stylesheet"
+          href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css"/>
     <link rel="stylesheet" href="css/owl.css">
     <!--<link href="css/angular-material.css">-->
     <!--<link rel="stylesheet" href="bower_components/angular-material/angular-material.min.css" type="text/css">-->
+
+
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places"></script>
+
+
+
 
 
     <link href="owl-carousel/owl.carousel.css"/>
@@ -22,6 +29,8 @@
     <link href="owl-carousel/owl.theme.css"/>
     <link href="css/test.css" rel="stylesheet"/>
     <link href="css/background.css" rel="stylesheet"/>
+
+
 
 
     <!-- External Libraries-->
@@ -35,10 +44,6 @@
     <!--<script src="https://code.angularjs.org/1.4.9/angular-messages.min.js"></script>-->
 
 
-
-
-
-
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-animate.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-route.min.js"></script>
@@ -48,15 +53,15 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.0-rc4/angular-material.min.js"></script>
 
 
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.carousel.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.theme.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.transitions.min.css" />
-   <script src="owl-carousel/owl.carousel.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.carousel.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.theme.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.transitions.min.css"/>
+    <script src="owl-carousel/owl.carousel.min.js"></script>
 
     <script src="js/jsonparse.js"></script>
     <script src="js/jqueryfileupload.js"></script>
-
+    <script language="JavaScript" src="http://www.geoplugin.net/javascript.gp" type="text/javascript"></script>
+    <script src="js/jquery.geocomplete.min.js"></script>
 
 
     <!-- Internal Libraries-->
@@ -65,16 +70,31 @@
     <script src="directives/directives.js"></script>
     <script src="directives/uniqueDirective.js"></script>
     <script src="directives/compareTo.js"></script>
-
-
+    <script src="js/jquery.crypt.js"></script>
 
 
     <!-- Configuration-->
     <script src="app.js"></script>
     <script src="config.js"></script>
 
+    <!-- Photo Services ---->
+    <script src="services/photo.service.client.js"></script>
+
+
+    <script src="services/trip.service.client.js"></script>
+
+
+    <script src="views/places/places.controller.js"></script>
+
+    <script src="services/places.service.client.js"></script>
+
+    <script src="views/places/places-edit.controller.js"></script>
+
+    <script src="views/trip/trip-edit.client.controller.js"></script>
+
 
     <!-- User Javascript-->
+    <script src="views/user/users.controller.client.js"></script>
     <script src="services/user.service.client.js"></script>
     <script src="views/home/home.controller.client.js"></script>
     <script src="views/user/register.controller.client.js"></script>
@@ -86,8 +106,13 @@
     <script src="views/photo/photo.controller.client.js"></script>
     <script src="views/photo/photoupload.controller.client.js"></script>
     <script src="views/photo/photo-edit.controller.client.js"></script>
+
+
+
+
+
 </head>
 <body>
-    <div id="cool" ng-view></div>
+<div id="cool" ng-view></div>
 </body>
 </html>

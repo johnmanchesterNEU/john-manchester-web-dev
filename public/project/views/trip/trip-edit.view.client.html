@@ -1,0 +1,93 @@
+<div class="container-fluid">
+    <div class="col-sm-4 ui-corner-all photocard">
+        <div class="form-group">
+            <label for="tripname">Trip Name</label>
+            <a ng-click="model.addTrip()"><span class="glyphicon glyphicon-plus hand"></span></a>
+            <input ng-model="model.trip.name" id="tripname"
+                   class="form-control"
+                   placeholder="Trip Name"/>
+        </div>
+
+        <div class="form-group">
+            <label for="description">Places</label>
+            <input ng-model="model.trip.places"
+                   value=""
+                   id="places"
+                   class="form-control"
+                   placeholder="Places"/>
+            <a ng-click="model.addPlace()"><span class="glyphicon glyphicon-plus"></span></a>
+        </div>
+
+        <div ng-repeat="place in model.places">
+            <span>{{place.name}}<a ng-click="model.removePlace($index)"><span class="glyphicon glyphicon-remove"></span></a></span></br>
+        </div>
+
+        <div class="form-group">
+            <label for="description">Trip Description</label>
+        <textarea ng-model="model.trip.description"
+                  id="description"
+                  class="form-control"
+                  placeholder="Trip Description"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="datestart">Starting Date</label>
+            <input ng-model="model.trip.start"
+                   class="form-control" id="datestart" type="date"/>
+        </div>
+
+        <div class="form-group">
+            <label for="dateend">Ending Date</label>
+            <input ng-model="model.trip.end"
+                   class="form-control"
+                   id="dateend" type="date"/>
+        </div>
+    </div>
+  <!--  <div ng-repeat="trips model.mytrips">
+        <div class="col-sm-4 ui-corner-all photocard">
+            <div class="form-group">
+                <label for="tripname">Trip Name</label>
+                <a><span class="glyphicon glyphicon-plus hand"></span></a>
+                <input ng-model="model.trip.name" id="tripname{{$index}}"
+                       class="form-control"
+                       placeholder="Trip Name"/>
+            </div>
+
+            <div class="form-group">
+                <label for="description">Places</label>
+                <input ng-model="model.trip.places"
+                       value=""
+                       id="places{{$index}}"
+                       class="form-control"
+                       placeholder="Places"/>
+                <a ng-click="model.addPlace()"><span class="glyphicon glyphicon-plus"></span></a>
+            </div>
+
+            <div ng-repeat="place in model.places">
+                <span>{{place.name}}<a ng-click="model.removePlace($index)"><span
+                        class="glyphicon glyphicon-remove"></span></a></span></br>
+            </div>
+
+            <div class="form-group">
+                <label for="description">Trip Description</label>
+        <textarea ng-model="model.trip.description"
+                  id="description{{$index}}"
+                  class="form-control"
+                  placeholder="Trip Description"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="datestart">Starting Date</label>
+                <input ng-model="model.trip.start"
+                       class="form-control" id="datestart{{index}}" type="date"/>
+            </div>
+
+            <div class="form-group">
+                <label for="dateend">Ending Date</label>
+                <input ng-model="model.trip.end"
+                       class="form-control"
+                       id="dateend{{$index}}" type="date"/>
+            </div>
+        </div>
+    </div>-->
+</div>

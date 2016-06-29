@@ -1,0 +1,14 @@
+Alice
+Wonderland
+flickr screen name: alicewonderland6
+flickr email: i.alicewonderland@yahoo.com
+flickr password: cheshire1
+local username: alice
+local password: alice
+
+
+Bob
+Hedlund
+flickr screen name: bobhedlundmayor
+flickr password: theking1
+flickr email: iam.themayor@yahoo.com

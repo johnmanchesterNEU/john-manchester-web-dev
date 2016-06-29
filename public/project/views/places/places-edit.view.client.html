@@ -1,0 +1,19 @@
+<div class="container-fluid" style="width: 100%; height: auto">
+    <div class="map_canvas" style="width: 100%; height: 400px"></div>
+
+    <form class="form-horizontal">
+        <div class="form-inline" style="margin-top: 10px; margin-bottom: 10px">
+            <input class="form-control" style="width: 80%"
+                   id="geocomplete"
+                   type="text"
+                   placeholder="Type in an address"
+                   value="{{model.location}}"/>
+        <span>
+            <input class="btn btn-primary" id="find" type="button" value="find"/>
+            </span>
+        </div>
+            <a ng-click="model.addPlace()" class="hand"><span class="glyphicon glyphicon-plus-sign"></span> Add Place</a>
+            <a id="reset" href="" style="display:none;">Reset Marker</a>
+
+    </form>
+</div>

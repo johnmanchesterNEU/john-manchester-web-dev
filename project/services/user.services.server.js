@@ -1,4 +1,5 @@
 var passport = require('passport');
+
 var LocalStrategy = require('passport-local').Strategy;
 var FacebookStrategy = require('passport-facebook').Strategy;
 var bcrypt = require("bcrypt-nodejs");
@@ -7,7 +8,12 @@ var bcrypt = require("bcrypt-nodejs");
 var GoogleStrategy = require('passport-google-oauth2').Strategy;
 //var GoogleStrategy = require('passport-google-oauth20').Strategy;
 //var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
+// /
+//flickr-oauth-and-upload
+
+
 var FlickrStrategy = require('passport-flickr').Strategy;
+//var FlickrStrategy = require('passport-flickr').Strategy;
 //var session = require('express-session');
 //app.use(passport.initialize());
 //var GoogleStrategy2 = require('passport-google').Strategy;
@@ -19,6 +25,108 @@ var FlickrStrategy = require('passport-flickr').Strategy;
 
 module.exports = function (app, models) {
     var userModel = models.userModel;
+
+    //flickr configuration
+    var flickrConfig = {
+        consumerKey: process.env.FLICKR_CONSUMER_KEY,
+        consumerSecret: process.env.FLICKR_CONSUMER_SECRET,
+        callbackURL: process.env.FLICKR_CALLBACK_URL,
+        passReqToCallback: true
+    }
+
+
+
+    //{api_key:process.env.FLICKR_CONSUMER_KEY, secret:process.env.FLICKR_CONSUMER_SECRET, permissions: "delete"}
+
+    var flickrConfig2 = {
+        api_key: process.env.FLICKR_CONSUMER_KEY,
+        secret: process.env.FLICKR_CONSUMER_SECRET,
+        callback: process.env.FLICKR_CALLBACK_URL,
+        permissions: "delete",
+        callback: process.env.FLICKR_CALLBACK_URL
+    }
+
+   
+
+
+
+
+
+
+
+
+
+
+    app.get("/project2/auth/flickr/username/:uid/password/:pid", function (req, res, next) {
+
+        console.log(req.params.uid);
+        console.log(req.params.pid);
+
+        var state = {
+            username: req.params.uid,
+            password: req.params.pid
+        }
+
+        req.session.state = state;
+
+
+     // console.log(request);
+           //.then(function(token){
+            //   console.log(token);
+
+//        }, function (error) {
+  //             res.statusCode(400).send("Could not authenticate.")
+    //       });
+        //console.log(requestToken)
+        // in Oauth2, its more like : args.scope = reqId, and args as authenticate() second params
+        Flickr.authenticate(flickrConfig2, function(sucess){
+            console.log(success); return success;
+        },function(error){console.log(error); return error;})(req, res, next);
+    });
+
+
+
+
+
+
+
+    app.put("/pro/follow/", follow);
+    function follow(req, res){
+        var follow = req.body;
+
+        console.log(follow);
+        userModel
+            .follow(follow)
+            .then(function (succes) {
+                res.status(200).send("Following user");
+            }, function(error){
+                res.status(400).send("Cannot follow user" )
+            })
+        }
+
+    app.get("/pro/getusers", getUsers);
+    function getUsers(req, res) {
+       // var userId = req.params.userId;
+        // console.log(req.session.currentUser);
+        //console.log(newUser);
+        userModel
+            .getUsers()
+            .then(
+                function (user) {
+                    res.json(user);
+                },
+                function (error) {
+                    res.status(400).send("Could not find user on server");
+                })}
+
+
+
+
+
+
+
+
+
 
 
     app.delete("/api/user/:userId", deleteUser);
@@ -227,13 +335,7 @@ module.exports = function (app, models) {
         }));
 
 
-    //flickr configuration
-    var flickrConfig = {
-        consumerKey: process.env.FLICKR_CONSUMER_KEY,
-        consumerSecret: process.env.FLICKR_CONSUMER_SECRET,
-        callbackURL: process.env.FLICKR_CALLBACK_URL,
-        passReqToCallback: true
-    }
+
 
 
     var facebookConfig = {
@@ -401,7 +503,56 @@ module.exports = function (app, models) {
     function FlickrLogin(req, token, tokenSecret, profile, done) {
         //console.log(req);
 
+      //  console.log(req);
+        //console.log(done);
+        console.log(profile);
+        console.log(token);
         // var flickrUser = new userModel();
+
+        // We need to exchange or auth token for an access token
+        // because flickr is annoying like that
+
+       // console.log(req.query.oauth_verifier);
+        //flickrConfig = {
+      //  consumerKey: process.env.FLICKR_CONSUMER_KEY,
+        //    consumerSecret
+     /*   var options = {
+            flickrConsumerKey : flickrConfig.consumerKey,
+            flickrConsumerKeySecret : flickrConfig.consumerSecret,
+            oauthToken: token,
+            oauthTokenSecret : tokenSecret,
+            oauthVerifier: req.query.oauth_verifier
+            
+        }
+
+
+        console.log("TOKEN?");
+      // console.log(flickrApi.useRequestTokenToGetAccessToken(options));
+
+        var url = flickrApi.accessURL(options);
+
+
+
+
+        var options = {
+            flickrConsumerKey : flickrConfig.consumerKey,
+            flickrConsumerKeySecret : flickrConfig.consumerSecret,
+            oauthToken: token,
+            oauthTokenSecret : tokenSecret,
+            oauthVerifier: req.query.oauth_verifier
+
+        }
+        
+        
+        
+        
+        
+        var access = flicker.callApiMethod()
+        
+
+        console.log(url);
+
+        console.log(profile);*/
 
 
         var fullName = profile.fullName.split(" ");
@@ -415,6 +566,7 @@ module.exports = function (app, models) {
             "flickr": {
                 "id": profile.id,
                 "token": token,
+                "tokenSecret":tokenSecret,
                 "displayName": profile.displayName
             }
         };

@@ -1,0 +1,15 @@
+URL: https://api.flickr.com/services/rest/
+?method=flickr.photos.delete&api_key=5970d11e3dab44314b360e9a2e169970&photo_id=27338442124+&format=json&nojsoncallback=
+1&auth_token=72157669749356631-080041fda29c26fb&api_sig=5c19f51fd9ca57eee7971d85ef38ee33
+
+
+72157669754373701-781439f67dbe9a8e
+
+72157669754373701-781439f67dbe9a8e
+
+
+
+72157669329256720-7f15c2de32795a9f
+
+
+ https://api.flickr.com/services/rest/?method=flickr.auth.checkToken&api_key=5970d11e3dab44314b360e9a2e169970&auth_token=72157669749356631-080041fda29c26fb&format=json&nojsoncallback=1&api_sig=661ddbb09d413b37a9c11fa06c9b3558

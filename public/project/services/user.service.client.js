@@ -18,9 +18,26 @@
             register: register,
             unregister: unregister,
             unflickr: unflickr,
-            updateFlickr:updateFlickr
+            updateFlickr:updateFlickr,
+            getUsers:getUsers,
+            followMe:followMe
         };
         return api;
+
+
+        function followMe(follow){
+            console.log(follow);
+            var url = "/pro/follow";
+            return $http.put(url, follow);
+        }
+
+
+
+        function  getUsers() {
+            var url = "/pro/getusers/";
+            return $http.get(url);
+        }
+
 
 
         function unflickr(id) {
