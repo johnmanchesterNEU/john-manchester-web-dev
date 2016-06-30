@@ -1,10 +1,5 @@
-var flickrApi = require('flickr-oauth-and-upload');
-var sig = require('oauth-signature');
+module.exports = function (app, models) {
 
-module.exports = function (app, models, $http) {
-
-    var userModel = models.userModel;
-    var mediaModel = models.mediaModel;
     var placeModel = models.placeModel;
 
     app.put("/pro/place", addPlace);
@@ -23,12 +18,24 @@ module.exports = function (app, models, $http) {
                 console.log(error);
                 res.status(400).send("Place could not be added");
             })
-
+    }
         //tripModel
 
 
+        app.get("/pro/places", getPlaces);
 
-    }
+        function getPlaces(req, res){
+            return placeModel
+                .getPlaces()
+                .then(function (results) {
+                    console.log(results)
+                    res.json(results);
+                },function (error) {
+                    res.status(400).send("Can not get places");
+                })
+
+                }
+
 
 
 };

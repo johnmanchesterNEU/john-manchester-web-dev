@@ -48,7 +48,7 @@
         function getPhotosUser(user){
             //console.log(flickrConfig);
 
-            var key = "c778ef301f9d7fd8fb70c5dc8cfe1bf9"
+            var key = "c778ef301f9d7fd8fb70c5dc8cfe1bf9";
 
 
             console.log(user.flickr.id)
@@ -62,7 +62,7 @@
         function getPhotosUser2(user){
             //console.log(flickrConfig);
 
-            $http.get("/user/"+ user.flickr.id+ "/photos")
+           return  $http.get("/user/"+ user.flickr.id+ "/photos")
 
         }
 

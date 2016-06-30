@@ -20,27 +20,27 @@
 
         function addTrip(){
             console.log(vm.trip);
-            TripService
-                .addTrip(id, vm.trip)
-                .then(function (success) {
+         //   TripService
+           //     .addTrip(id, vm.trip)
+            //    .then(function (success) {
                     
                     
-                }, function (error) {
+              //  }, function (error) {
                     
-                })
+              //  })
         }
 
 
 
 
         function init(){
-            TripService
-                .tripsforUser(id)
-                .then(function (success) {
-                    vm.myTrips = success.data;
-                }, function (error) {
-                    vm.error = error.data;
-                })
+           // TripService
+              //  .tripsforUser(id)
+               // .then(function (success) {
+               //    vm.myTrips = success.data;
+               // }, function (error) {
+               //     vm.error = error.data;
+               // })
         }
 
         init();

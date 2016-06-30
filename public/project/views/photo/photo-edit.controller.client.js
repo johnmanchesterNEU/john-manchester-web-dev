@@ -84,7 +84,6 @@
         }
 
         function init(){
-
             UserService
                 .findUserById(id)
                 .then(function(response) {
@@ -93,68 +92,24 @@
                     console.log(vm.user.flickr)
                     console.log(vm.user.flickr.id);
 
-                    PhotoService
-                        .getPhotosUser(vm.user)
-                        .then(function (response) {
+                    if(vm.user.flickr.id) {
+                        PhotoService
+                            .getPhotosUser(vm.user)
+                            .then(function (response) {
 
-                            data = response.data.replace("jsonFlickrApi(","");
-                            data = data.substring(0,data.length - 1);
-                            data = JSON.parse(data);
-                            vm.jphotos = data;
-                            console.log(vm.jphotos);
+                                data = response.data.replace("jsonFlickrApi(", "");
+                                data = data.substring(0, data.length - 1);
+                                data = JSON.parse(data);
+                                vm.jphotos = data;
+                                console.log(vm.jphotos);
 
-                            vm.photos = vm.jphotos.photos.photo;
-                            console.log(vm.photos[0]);
-                        }, function (error) {
-                            vm.error = error;
-                        })
+                                vm.photos = vm.jphotos.photos.photo;
+                                console.log(vm.photos[0]);
+                            }, function (error) {
+                                vm.error = error;
+                            })
 
-
-
-
-
-                    PhotoService
-                        .getPhotosUser2(vm.user)
-                        .then(function (response) {
-
-                           var data2 = response.data.replace("jsonFlickrApi(","");
-                            data2 = data.substring(0,data.length - 1);
-                            data2 = JSON.parse(data);
-                            //vm.jphotos = data;
-                            console.log(data2);
-
-                           // vm.photos = vm.jphotos.photos.photo;
-                           // console.log(vm.photos[0]);
-                        }, function (error) {
-                            vm.error = error;
-                        })
-
-
-
-                    /*  $http.get("https://api.flickr.com/services/rest/?&method=flickr.people.getPublicPhotos&api_key="+process.env.FLICKR_CONSUMER_KEY+"&extras=media&user_id="+vm.user.flickr.id+"&format=json")
-                          .then(function(response){
-                              console.log(response);
-
-                              data = response.data.replace("jsonFlickrApi(","");
-                              data = data.substring(0,data.length - 1);
-                              data = JSON.parse(data);
-                              vm.jphotos = data;
-                              console.log(vm.jphotos);
-
-                              vm.photos = vm.jphotos.photos.photo;
-                              console.log(vm.photos[0]);
-
-                              //$scope.items1 = vm.photos;
-
-                          },function(error){
-                              console.log(error);
-                          })*/
-
-
-
-
-
-
+                    }
                 }, function(error){
                     vm.error = error;
                 });

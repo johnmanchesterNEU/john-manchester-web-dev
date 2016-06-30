@@ -3,26 +3,36 @@
         .module("Project")
         .controller("TestController", TestController);
 
-    function TestController($location, $http, TestService) {
+    function TestController($location, $http) {
 
 
         var vm = this;
 
 
-        function test() {
-            var check = {
-                method: "flickr.test.login",
-                flickrConsumerKey: "dc29c800c34e2955c179219f36bc7d83",
-                oauthToken: "72157670260571446-7dd181a8bae384b5",
-                optionalArgs: {format: "json" , nojsoncallback : 1}
-            }
+        $(function(){
+            var $geocomplete = $("#geocomplete"),
+                $multiple = $("#multiple");
 
-            TestService.checklogin(check)
+            $geocomplete
+                .geocomplete({ map: ".map_canvas" })
+                .bind("geocode:multiple", function(event, results){
+                    $.each(results, function(){
+                        var result = this;
+                        $("<li>")
+                            .html(result.formatted_address)
+                            .appendTo($multiple)
+                            .click(function(){
+                                $geocomplete.geocomplete("update", result)
+                            });
+                    });
+                });
+
+            $("#find").click(function(){
+                $("#geocomplete").trigger("geocode");
+            });
+
+        });
 
 
-            console.log(vm);
-        }
-
-        
     }
 })();

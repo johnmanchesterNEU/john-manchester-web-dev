@@ -22,6 +22,12 @@
                 title: "Home",
                 controllerAs: "model"
             })
+            .when("/test", {
+                templateUrl: "views/test/test.view.client.html",
+                controller: "TripEditController",
+                title: "Home",
+                controllerAs: "model"
+            })
             .when("/tripedit", {
                 templateUrl: "views/trip/trip-edit.view.client.html",
                 controller: "TripEditController",

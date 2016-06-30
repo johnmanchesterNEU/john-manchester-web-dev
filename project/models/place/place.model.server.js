@@ -2,6 +2,7 @@ module.exports = function () {
 
 
     var mongoose = require("mongoose");
+    var Promise = require('mpromise');
     var PlaceSchema = require("./place.schema.server")();
     var Place = (mongoose.models.Place)? mongoose.model("Place")  :mongoose.model("Place", PlaceSchema);
 
@@ -9,12 +10,18 @@ module.exports = function () {
         createPlace:createPlace,
         updatePlace:updatePlace,
         deletePlace:deletePlace,
+        getPlaces:getPlaces
     }
     return api;
 
 
+    function getPlaces() {
+        return Place.find({}).exec();
+    }
+    
+    
     function deletePlace(id) {
-        Place.delete({"_id" : id});
+        return Place.delete({"_id" : id});
     }
 
     function updatePlace(place){

@@ -1,4 +1,4 @@
-<div ng-repeat="photo in model.photos" ng-switch on="photo.media" style="">
+<div ng-if="model.user.flickr.id" ng-repeat="photo in model.photos" ng-switch on="photo.media" style="">
     <div class="col-sm-4 ui-corner-all photocard" style="height: auto">
         <div  ng-switch-when="photo">
         <img class="displayed"
@@ -35,11 +35,16 @@
     </div>
 </div>
 
+<div ng-if="!model.user.flickr.id">
+    You have to have a Flickr Account to upload photos! Please visit <a href="https://www.flickr.com/signin">flickr</a> to sign up.
+    Or if you have an account <a href="/project/#/register">register</a>!
+
+    If you have an account with us then <a href="">login</a> with your flickr account.
+</div>
 
 
 
-
-    <!---
+<!---
     <div ng-repeat="photo in model.photos" ng-switch on="photo.media" style="">
 
         <div class="black" ng-switch-when="photo">

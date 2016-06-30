@@ -14,6 +14,7 @@ module.exports = function () {
         datetaken: Date,
         width: Number,
         height: Number,
+        rating:Number,
         place: {type: mongoose.Schema.ObjectId, ref: "Place"},
         comments: [{type: mongoose.Schema.ObjectId, ref:"Comment"}],
         dateCreated: {type: Date, default: Date.now()}

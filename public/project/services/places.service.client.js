@@ -16,7 +16,7 @@
         function addPlace(place){
             //console.log(flickrConfig);
 
-            $http.put("/pro/place", place);
+           return $http.put("/pro/place", place);
 
         }
 
@@ -25,7 +25,7 @@
         function getPlaces(){
             //console.log(flickrConfig);
 
-            $http.get("/pro/places");
+           return $http.get("/pro/places");
 
         }
 

@@ -1112,3 +1112,40 @@ IMG.displayed {
     margin: 10px;
 
 }
+
+.placecontainer{
+    background-color: lightblue;
+    width: 100%;
+    height: auto;
+}
+
+.placesmap{
+    width: 100%;
+    height: 300px;
+    margin-bottom: 10px;
+}
+
+.placesform{
+    width: 80%; display: inline;
+}
+.placesAdd{
+    min-width: 10%;
+}
+
+
+.placesLink{
+    font-weight: bold;
+    text-decoration: none;
+}
+
+
+.placesLink:hover{
+    font-weight: bold;
+    text-decoration: none;
+}
+
+
+.placesSubmit{
+    width: 20%;
+    display: inline;
+}

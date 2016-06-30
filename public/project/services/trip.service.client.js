@@ -14,17 +14,17 @@
 
         function tripsForUser(userId){
             url = "pro/trips/" + userId;
-            $http.get(url);
+           return $http.get(url);
         }
 
         function addTrip(userId, trip) {
             url = "pro/trips/" + userId;
-            $http.put(url,trip);
+          return  $http.put(url,trip);
         }
 
         function deleteTrip(userId, trip) {
             url = "pro/trips/" + userId;
-            $http.delete(url,trip);
+           return $http.delete(url,trip);
         }
     }
 })();

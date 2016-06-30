@@ -1,10 +1,8 @@
-<div>
-    <label for="token">User Token</label>
-    <input id="token" type="text" ng-model="model.token" placeholder="User Token"><br/>
-    <label for="secret">User Secret</label>
-    <input id="secret" type="text" ng-model="model.secret" placeholder="User Secret">
-    <label for="params"></label>
-    <input id="params" type="text" ng-model="model.params" placeholder="Params">
-    <button ng-click="model.test()">Submit</button>
-</div>
-</div>
+<div class="map_canvas"></div>
+
+<form>
+    <input id="geocomplete" type="text" placeholder="Type in an address" size="90" value="Hauptstraße"/>
+    <input id="find" type="button" value="find" />
+</form>
+
+<ul id="multiple"></ul>

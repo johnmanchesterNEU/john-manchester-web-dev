@@ -1,6 +1,7 @@
 module.exports = function () {
 
     var mongoose = require('mongoose');
+    mongoose.Promise = require('bluebird');
     dbURI = 'mongodb://localhost/summer';
     mongoose.connect(dbURI);
 
