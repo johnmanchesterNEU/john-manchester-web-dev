@@ -51,58 +51,21 @@
 
         
 
-        $(document).ready(function() {
-            $("#owl-demo").owlCarousel({
-
-                navigation : true,
-                slideSpeed : 300,
-                paginationSpeed : 400,
-                singleItem : true
-
-                // "singleItem:true" is a shortcut for:
-                // items : 1,
-                // itemsDesktop : false,
-                // itemsDesktopSmall : false,
-                // itemsTablet: false,
-                // itemsMobile : false
-
-            });
-
-            $("#owl-demo2").owlCarousel({
-
-                navigation : true,
-                slideSpeed : 300,
-                paginationSpeed : 400,
-                singleItem : true
-
-                // "singleItem:true" is a shortcut for:
-                // items : 1,
-                // itemsDesktop : false,
-                // itemsDesktopSmall : false,
-                // itemsTablet: false,
-                // itemsMobile : false
-
-            });
-
-
-        })
-
-
-
         function init(){
 
 
             /*var url = "https://farm" + photo.farm + ".staticflickr.com/" + photo.server;
              url += "/" + photo.id + "_" + photo.secret + "_b.jpg";*/
-          //  var url = "https://api.flickr.com/services/rest/?&method=flickr.people.getPublicPhotos&api_key=9eae9e2a0a7438976a234fc16ff535fa&user_id=144248730@N03";
+          //  var url =https://api.flickr.com/services/rest/?method=flickr.people.getPublicPhotos&api_key=a1bf2c7f3eb788b3312e1a639e324929&user_id=144248730%40N03&format=rest
 
-            $http.get("https://api.flickr.com/services/rest/?&method=flickr.people.getPublicPhotos&api_key=9eae9e2a0a7438976a234fc16ff535fa&extras=media&user_id=144248730@N03&format=json")
+            $http.get("https://api.flickr.com/services/rest/?&method=flickr.people.getPublicPhotos&api_key=c778ef301f9d7fd8fb70c5dc8cfe1bf9&extras=media&user_id=144248730@N03&format=json&nojsoncallback=1")
                 .then(function(response){
-                    console.log(response);
+                    console.log(response.data);
 
-                    data = response.data.replace("jsonFlickrApi(","");
-                    data = data.substring(0,data.length - 1);
-                    data = JSON.parse(data);
+                  //  data = response.data.replace("jsonFlickrApi(","");
+                  //  data = data.substring(0,data.length - 1);
+                    data = response.data;
+                    console.log(data);
                     vm.jphotos = data;
 
                     vm.photos = vm.jphotos.photos.photo;

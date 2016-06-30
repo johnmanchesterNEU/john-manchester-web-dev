@@ -9,9 +9,18 @@
         var api = {
             getPhotosUser:getPhotosUser,
             getPhotosUser2:getPhotosUser2,
-            deletePhoto:deletePhoto
+            deletePhoto:deletePhoto,
+            getInfo:getInfo,
+            getGeo:getGeo,
+            getSize:getSize
         };
         return api;
+
+        function  getGeo(user, photoId) {
+            var key = "c778ef301f9d7fd8fb70c5dc8cfe1bf9";
+            return $http.get(" https://api.flickr.com/services/rest/?method=flickr.photos.geo.getLocation&api_key="
+            +key+"&photo_id="+photoId+"&format=json&nojsoncallback=1");
+        }
 
         function  deletePhoto(photo, user) {
 
@@ -44,6 +53,23 @@
         }
 
 
+
+
+        function getSize(user, photoId) {
+            var key = "c778ef301f9d7fd8fb70c5dc8cfe1bf9";
+            return $http.get("https://api.flickr.com/services/rest/?method=flickr.photos.getSizes&api_key="
+            +key+"&photo_id="+photoId+"&format=json&nojsoncallback=1");
+        }
+
+
+        function getInfo(user, photoId) {
+            var key = "c778ef301f9d7fd8fb70c5dc8cfe1bf9";
+            return $http.get("https://api.flickr.com/services/rest/?method=flickr.photos.getInfo&api_key="
+            +key+"&photo_id="+photoId+"&format=json&nojsoncallback=1")
+        }
+
+
+
         
         function getPhotosUser(user){
             //console.log(flickrConfig);
@@ -53,7 +79,7 @@
 
             console.log(user.flickr.id)
             return $http.get("https://api.flickr.com/services/rest/?&method=flickr.people.getPublicPhotos&api_key="
-                +key+"&extras=media&user_id="+user.flickr.id+"&format=json")
+                +key+"&extras=media&user_id="+user.flickr.id+"&format=json&nojsoncallback=1")
 
         }
 

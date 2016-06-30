@@ -1,0 +1,17 @@
+<div style="display: inline-flex; margin: 3px" ng-repeat="photo in model.photos" ng-switch on="photo.media" style="">
+
+    <div class="item black fontwhite photo relative" ng-switch-when="photo" ng-click="model.selectPhoto($index)">
+        <span id="ok{{$index}}" class="glyphicon glyphicon-ok-sign ok"> </span>
+        <img id="m{{$index}}" class="displayed"
+             src="https://farm{{photo.farm}}.staticflickr.com/{{photo.server}}/{{photo.id}}_{{photo.secret}}_b.jpg" width="100" height="100"/>
+        {{photo.title}}
+    </div>
+
+    <!-- video play support will not be implemented due to time constraints -->
+    <div class="item black fontwhite photo relative" ng-switch-when="video" ng-click="model.selectPhoto($index)">
+        <span id="ok{{$index}}" class="glyphicon glyphicon-ok-sign ok"> </span>
+        <img id="m{{$index}}" class="displayed"
+             src="https://farm{{photo.farm}}.staticflickr.com/{{photo.server}}/{{photo.id}}_{{photo.secret}}_b.jpg" width="100" height="100"/>
+        {{photo.title}}
+    </div>
+</div>

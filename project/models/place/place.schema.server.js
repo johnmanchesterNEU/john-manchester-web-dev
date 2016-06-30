@@ -13,6 +13,7 @@ module.exports = function () {
         comments: [{type:mongoose.Schema.ObjectId, ref:"Comment"}],
         name: String,
         id :  {type: String, unique: true}, // googles place id must be unique
+        fid: {type: String, unique: true}, // flickr place Id also unique
         loc:{
             type: [Number], //[<longitude>,<latitude>]
             index: '2d'  //create the geospatial index

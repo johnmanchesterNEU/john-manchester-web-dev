@@ -96,6 +96,29 @@
                 title: "Photo",
                 controllerAs: "model"
             })
+
+            .when("/photochoose/",{
+                templateUrl: "views/photo/photo-choose.view.client.html",
+                controller: "PhotoChooseController",
+                title: "Photo Edit",
+                controllerAs: "model",
+                resolve: {
+                    loggedin: checkChoose
+                }
+            })
+
+
+            .when("/photochoose/:id",{
+                templateUrl: "views/photo/photo-choose.view.client.html",
+                controller: "PhotoChooseController",
+                title: "Photo Edit",
+                controllerAs: "model",
+                resolve: {
+                    loggedin: checkChoose
+                }
+            })
+
+
             .when("/photoedit/:id",{
                 templateUrl: "views/photo/photo-edit.view.client.html",
                 controller: "PhotoEditController",
@@ -144,6 +167,40 @@
                 redirectTo: "views/user/register.view.client.html"
             });
 
+
+
+        function checkChoose(UserService, $q, $location, $rootScope) {
+            var deferred = $q.defer();
+            UserService
+                .loggedIn()
+                .then(
+                    function (response) {
+                        var user = response.data;
+                        console.log(user);
+                        if (!user) {
+                            console.log(user._id)
+                            deferred.reject();
+                            $rootScope.currentUser = null;
+                            $location.url("/register/")
+                        } else {
+                            deferred.resolve();
+                            $rootScope.currentUser = user;
+                            //console.log("eee " + response.data)
+                            //res.render();
+                            console.log(user.local.username);
+                            $location.url("/photochoose/" + user._id);
+
+                        }
+                    },
+                    function (err) {
+                        console.log(err);
+                        $rootScope.currentUser = null;
+                        deferred.reject();
+                    }
+                );
+
+            return deferred.promise;
+        }
 
 
         function checkPlaces(UserService, $q, $location, $rootScope) {

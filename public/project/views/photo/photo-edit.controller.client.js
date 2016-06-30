@@ -97,9 +97,7 @@
                             .getPhotosUser(vm.user)
                             .then(function (response) {
 
-                                data = response.data.replace("jsonFlickrApi(", "");
-                                data = data.substring(0, data.length - 1);
-                                data = JSON.parse(data);
+                                data = response.data;
                                 vm.jphotos = data;
                                 console.log(vm.jphotos);
 

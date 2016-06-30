@@ -1149,3 +1149,18 @@ IMG.displayed {
     width: 20%;
     display: inline;
 }
+
+.photo:hover{
+    opacity: 0.5;
+}
+
+.relative{
+    position: relative;
+}
+
+.ok{
+    position: absolute;
+    top: 3px;
+    right: 3px;
+    display: none;
+}
