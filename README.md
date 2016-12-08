@@ -7,10 +7,13 @@
 1. node server.js
 1. browse to localhost:3000
 
-Widgets uses the eye icon to toggle sortable on and off.
-Videos and inputs throw a div over it to allow dragging anywhere in the document.
-Sortable is updated and works on the database. However, I would like to have a method that ensure reorder occur in the right
-order everytime
+Project is not complete and must be accesed by its folders
+home
+photo
+places
+trip
+user
+
 
 Form validation works for all required fields.
 

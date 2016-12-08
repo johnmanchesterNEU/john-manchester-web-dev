@@ -1,0 +1,59 @@
+<div id="dialog" title="">
+    <form name="socialSignup" id="socialSignup" novalidate>
+        <div class="form-group">
+            <input class="form-control"
+                   id="user_pop"
+                   name="userPop"
+                   ng-model="user.pop.username"
+                   type="text"
+                   data-wc-unique='{ "db": "user", "key":"local.username" }'
+                   placeholder="Enter Username" ng-pattern-restrict="^[a-zA-Z0-9_\-.@]*$" required/>
+            <span class="error"
+                  ng-show="socialSignup.userPop.$touched && socialSignup.userPop.$error.required">Username is required.</span>
+            <span class="error" ng-show="socialSignup.userPop.$dirty && socialSignup.userPop.$error.unique">Username already in use</span>
+        </div>
+        <div class="form-group">
+            <input class="form-control"
+                   id="password_pop"
+                   name="passwordPop"
+                   ng-model="user.pop.password"
+                   type="password" name="focus"
+                   placeholder="Enter Password"
+                   required/>
+            <span class="error"
+                  ng-show="socialSignup.passwordPop.$touched &&
+                  socialSignup.passwordPop.$invalid">Password is required.</span>
+        </div>
+        <div class="form-group">
+            <input class="form-control"
+                   id="password_rep"
+                   name="passwordRep"
+                   ng-model="repeat"
+                   type="password" name="focus"
+                   placeholder="Re-enter Password"
+                   compare-to="user.pop.password"
+                   required/>
+            <span class="error"
+                  ng-show="socialSignup.passwordPop.$touched &&
+                  socialSignup.passwordRep.$invalid">Passwords must match.</span>
+        </div>
+        <div class="form-group">
+            <a href="/project/auth/google"
+               ng-disabled="true"
+               class="btn btn-danger btn-block">
+                <span class="fa fa-google-plus"> Sign up with Google</span>
+            </a>
+
+            <a href="/project/auth/flickr/username/{{user.pop.username}}/password/{{user.pop.password}}"
+               class="btn btn-purple btn-block"
+               ng-disabled="socialSignup.$invalid">
+                <span class="fa fa-flickr"> Sign up with Flickr</span>
+            </a>
+            <a href="/project/auth/facebook"
+               class="btn btn-primary btn-block"
+               ng-disabled="true" disabled="true">
+                <span class="fa fa-facebook-square"> Sign up with Facebook</span>
+            </a>
+        </div>
+    </form>
+</div>

@@ -37,7 +37,7 @@
             console.log(vm.user);
            // console.log(user);
            // console.log($scope.user);
-            $http.post('/project/register', vm.user);
+            $http.put('/pro/register', vm.user);
         }
 
 

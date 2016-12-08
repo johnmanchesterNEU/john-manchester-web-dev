@@ -1,5 +1,7 @@
 <div ng-pattern-restrict id="bg" class="background2">
     <header class="nav whitefrost">
+        <a class="hand" ng-click="model.setScroll('#signup',0)"> Sign Up </a>
+        >
         <a class="hand" ng-click="model.setScroll('#myname',1)"> Name </a>
         >
         <a class="hand" ng-click="model.setScroll('#userName',2)"> User Name </a>
@@ -9,7 +11,7 @@
         <a class="hand" ng-click="model.setScroll('#country',4)">Country</a>
 
     </header>
-    <form name="signUp" novalidate>
+    <form action="pro/signup" name="signUp" method="post">
         <section id="main">
             <article id="signup" class="panel slidedown" ng-animate="'animate'">
             <span class="all2">
@@ -43,7 +45,7 @@
             </article>
             <article id="userName" class="panel slidedown" ng-animate="'animate'">
             <span class="all2 iblock">
-                <label class="fontwhite" for="user">Hey <b class="name"> {{user.firstName}}</b>. Think of a Username. <br> <p
+                <label class="fontwhite" for="user">Hey <b class="name"> {{model.user.firstName}}</b>. Think of a Username. <br> <p
                         class="indent">We'll make sure it's unique*</p></label>
 
                 <div class="full-pill search-box bg-white">
@@ -145,7 +147,7 @@
 </div>
 
 <nav class="navbarbottom whitefrost">
-    <span class="centeruser"><button ng-click="model.submitUser()" class="btn usersubmit" ng-disabled="signUp.$invalid">Submit</button>
+    <span class="centeruser"><button type="submit" class="btn usersubmit" ng-disabled="signUp.$invalid">Submit</button>
         <button class="navbut" id="up" ng-click="model.previous()" disabled>
             <span class="glyphicon glyphicon-chevron-up"></span>
         </button><button class="navbut" id="down" ng-click="model.next()">

@@ -1,4 +1,4 @@
-<div style="display: inline-flex; margin: 3px" ng-repeat="photo in model.photos" ng-switch on="photo.media" style="">
+<div class="photogrid" ng-repeat="photo in model.photos" ng-switch on="photo.media" style="">
 
     <div class="item black fontwhite photo relative" ng-switch-when="photo" ng-click="model.selectPhoto($index)">
         <span id="ok{{$index}}" class="glyphicon glyphicon-ok-sign ok"> </span>
@@ -15,3 +15,5 @@
         {{photo.title}}
     </div>
 </div>
+<div><a class="btn btn-primary" ng-click="model.submit()"><span class="glyphicon glyphicon-cloud"></span> Submit Photos</a></div>
+<div>{{model.success}}</div>

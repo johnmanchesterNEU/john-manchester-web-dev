@@ -1,7 +1,19 @@
-<header class="parent-element navbar blackfrost fixed-topnav-bar block">
-<input  style="width: 20%;" placeholder="Search media" /><a ng-click="model.social()" class="fontwhite navbar-link hand"> <span class="fa fa-sign-in"></span> Sign In</a>
-    <a href="/project/#/register" class="element btn btn-primary fontwhite hand" style=""><span class="glyphicon glyphicon-leaf"></span> Sign Up</a>
+<div class="backgroundhome panel">
+<header class="parent-element navbar clear-bar centerbar">
+    <input  class="search-bar" placeholder="Search media" />
+    <span class="pad-sign"><a ng-click="model.social()" class="fontwhite navbar-link home-link hand"><span class="fa fa-sign-in"></span> Sign In</a></span>
+    <span class="pad-home"><a href="#/register" class="element btn btn-primary fontwhite hand pad-home"><span class="glyphicon glyphicon-leaf"></span> Sign Up</a></span>
 </header>
+
+    <div class="centerhome">
+        <span class="fontwhite">
+            <h1>Tell Your Story.</h1>
+            <h2>Join and upload your photos and videos.<br/>Geo-Tag your media from around the world.<br/> Or link your flickr account!</h2><br/>
+            <a href="#/register" class="btn btn-default hand largelogin">Sign Up</a>
+        </span>
+    </div>
+
+</div>
 <div id="loginDialog" title="">
     <div id="login" ng-include="'views/user/login.view.client.html'"></div>
 </div>

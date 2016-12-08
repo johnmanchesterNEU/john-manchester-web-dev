@@ -13,6 +13,22 @@ module.exports = function (app, models, $http) {
         consumerSecret: "c7d4b19e14debcc7",
     }
 
+
+    app.put("/method/photos/add", addUserPhotos);
+    function addUserPhotos(req, res) {
+        var photos = req.body;
+        console.log(photos);
+        mediaModel
+            .addPhotos(photos)
+            .then(function (result) {
+                res.json(result);
+            }, function (error) {
+                res.status(400).send("Could not add photos");
+            })
+    }
+
+
+
     app.get("/user/:id/photos", getUserPhotos);
 
     function getUserPhotos(req, res){

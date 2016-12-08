@@ -39,6 +39,21 @@
         vm.selectPhoto = selectPhoto;
 
 
+        vm.submit = submit;
+        
+        
+        function  submit() {
+            console.log("submit");
+            PhotoService.addPhotos(vm.user, vm.selected)
+                .then(function (result) {
+                    vm.success = result.data;
+                }, function (error) {
+                    vm.success = error.data;
+                })
+            
+        }
+        
+        
 
 
         // Gets all necessary information from flickr to send to database
@@ -49,6 +64,7 @@
                         if (result.data.stat == "ok") {
                             var data = result.data.photo;
                            var info = {
+
                                 photoid : photoId,
                                 title: data.title._content,
                                 description: data.description._content,
@@ -74,6 +90,8 @@
                     }
                 )}
 
+        // Add flickr geotag information
+        // You must have flickr geotag turned on so info will be uploaded
         function getGeo(photoId) {
            return  PhotoService
                 .getGeo(vm.user, photoId)
@@ -91,24 +109,7 @@
                         info.country = data.photo.location.country._content;
                         console.log(info);
                         return info;
-                       // getSize(info);
 
-                        /*return {
-                            fid: data.photo.location.place_id,
-                            lat: data.photo.location.latitude,
-                            lng:  data.photo.location.longitude,
-                        city: data.photo.location.locality._content,
-                        county: data.photo.location.county._content,
-                        region: data.photo.location.region._content,
-                        country:data.photo.location.country._content
-                        }*/
-                        /*vm.info.fid = data.photo.location.place_id;
-                        vm.info.lat = data.photo.location.latitude;
-                        vm.info.lng = data.photo.location.longitude;
-                        vm.info.city = data.photo.location.locality._content;
-                        vm.info.county = data.photo.location.county._content;
-                        vm.info.region = data.photo.location.region._content;
-                        vm.info.country = data.photo.location.country._content;*/
                     }else{
                         return info;
                      //   getSize(info);
@@ -123,6 +124,7 @@
 
         }
 
+        //Add flickr size info
         function getSize(photoId) {
             return PhotoService.getSize(vm.user, photoId)
                 .then(function (result) {
@@ -158,6 +160,7 @@
         }
 
 
+        // Select photos for submission
         function selectPhoto(index) {
             var ok = "#ok" + index;
             $(ok).show();
@@ -166,18 +169,22 @@
 
 
 
+            // Make sure you do not select them twice
             var photoin = indexOf(vm.photos[index].id, vm.selected);
 
             console.log(photoin);
 
+            // if the photo is selected remove it
             if (photoin != -1) {
                 vm.selected.splice(photoin, 1);
                 $(ok).hide();
             } else {
 
+                // Combine All calls to flickr for photo information and add it to our selected array
                 Promise.all([getInfo(vm.photos[index].id), getGeo(vm.photos[index].id), getSize(vm.photos[index].id)]).then(function(data) {
                     console.log(data);
                    var finalObj =$.extend({}, data[0], data[1], data[2]);
+                    finalObj._user = id;
                     console.log(finalObj);
 
                     vm.selected.push(finalObj);

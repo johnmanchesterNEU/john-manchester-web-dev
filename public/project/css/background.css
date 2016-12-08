@@ -43,7 +43,7 @@ nav ul {
     margin: 0;
 }
 
-
+/* Panel transitions for registration page */
 .panel {
     width: 100%;
     height: 100%;
@@ -70,6 +70,36 @@ nav ul {
 }
 
 
+.home-link:hover{
+   color: #dddddd;
+    text-decoration: none;
+}
+
+/* The search bar on the home page */
+.search-bar{
+    width: 30%;
+    background-color: rgba(255,255,255, 0.6);
+    border-radius: 5px;
+    border: 0px;
+    margin: 0 auto;
+
+}
+
+.home{
+    min-height: 100%;
+    min-width: 100%;
+    width: 100%;
+    height: 100%;
+    z-index:0;
+    -webkit-transform: translateZ( 0 );
+    transform: translateZ( 0 );
+}
+/* The top navigation bar on the homepage */
+.clear-bar{
+    background-color: rgba(0,0,0,0);
+    padding-left: 10px;
+}
+
 .blackfrost{
     background: linear-gradient(to left bottom, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.8));
     border: none;
@@ -79,7 +109,7 @@ nav ul {
 
 .whitefrost{
     background: linear-gradient(to left bottom, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.8));
-    border: none;
+    border: none
 }
 
 .center{
@@ -425,8 +455,41 @@ a[ id= "contacto" ]:target ~ #main article.panel {
 
 }
 
+/* pad the sign-in and sign-up buttons */
+.pad-home{
+    padding-right: 0.75%;
+}
+.pad-sign{
+    padding-right: 2%;
+}
+
+
+
+.centerbar{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* The centering component for the  home text*/
+.centerhome{
+    width:100%; height:60%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Large home button login */
+.largelogin{
+    overflow: hidden;
+    font-size: x-large;
+}
+
+
+
+/* The back ground for the home page */
 .backgroundhome{
-    background: url("http://kingofwallpapers.com/tibet/tibet-002.jpg"), no-repeat center center scroll;
+    background: url("../backgrounds/winter.jpg"), no-repeat center center scroll;
     background-size: cover;
 
 }
@@ -1163,4 +1226,8 @@ IMG.displayed {
     top: 3px;
     right: 3px;
     display: none;
+}
+
+.photogrid{
+    display: inline-flex; margin: 3px;
 }

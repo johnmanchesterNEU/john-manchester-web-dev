@@ -12,9 +12,17 @@
             deletePhoto:deletePhoto,
             getInfo:getInfo,
             getGeo:getGeo,
-            getSize:getSize
+            getSize:getSize,
+            addPhotos:addPhotos
         };
         return api;
+
+
+
+        function addPhotos(user, photos) {
+            return $http.put("/method/photos/add", photos);
+        }
+
 
         function  getGeo(user, photoId) {
             var key = "c778ef301f9d7fd8fb70c5dc8cfe1bf9";
